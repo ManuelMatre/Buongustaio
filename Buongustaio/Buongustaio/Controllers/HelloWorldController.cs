@@ -30,7 +30,7 @@ namespace Buongustaio.Controllers
         }
         public string otracosa()
         {
-            return "prueba entregable 1";
+            return "prueba entregabl";
         }
     }
 }
