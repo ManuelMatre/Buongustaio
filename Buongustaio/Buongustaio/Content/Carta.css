@@ -1,0 +1,30 @@
+﻿html, body {
+  height: 100%;
+}
+ 
+.wrap {
+  height: 100vh;
+  display: flex;
+}
+main {
+  flex: 1;
+  display: flex;
+}
+ 
+aside, article {
+  overflow-y: scroll;
+  padding: 2em;
+}
+ 
+aside {
+  flex: 1;
+}
+ 
+article {
+  flex: 2;
+}
+@media (max-width: 800px) {
+  main {
+    flex-direction: column;
+  }
+}

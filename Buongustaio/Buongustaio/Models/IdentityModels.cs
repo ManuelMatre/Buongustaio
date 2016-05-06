@@ -29,5 +29,7 @@ namespace Buongustaio.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Productos> Productos { get; set; }
     }
 }

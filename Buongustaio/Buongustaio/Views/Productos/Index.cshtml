@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Buongustaio.Models.Productos>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
+}
+
+<!--<p>
+    //Html.ActionLink("Create New", "Create")
+</p>-->
+
+<div class="wrap">
+    <main>
+        <aside>
+            <h1>Menú</h1>
+            <p>
+                @for (int i = 0; i < 3; i++)
+                {
+                    <div class="row">
+                        @for (int j = 0; j < 4; j++)
+                        {
+                            if (counter < Model.Count())
+                            {
+                                <div class="col-xs-6 col-md-3">
+                                    <div class="thumbnail">
+                                        <img src="@Url.Content(Model.ElementAt(counter).Imagen)" alt="...">
+                                        <div class="caption">
+                                            <h3>@Model.ElementAt(counter).Descripcion</h3>
+                                            <p>$@Model.ElementAt(counter).Precio</p>
+                                            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            counter++;
+                        }
+                        </div>
+                }
+                </p>
+                </aside>
+                </main>
+                </div>
