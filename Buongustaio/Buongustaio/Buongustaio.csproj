@@ -299,6 +299,7 @@
     <Content Include="Models\BuongustaioModel.edmx.diagram">
       <DependentUpon>BuongustaioModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\navbar-fixed-side.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
