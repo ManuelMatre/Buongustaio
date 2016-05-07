@@ -11,7 +11,8 @@ namespace Buongustaio.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Comprobantes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +21,8 @@ namespace Buongustaio.Models
             this.Facturas = new HashSet<Facturas>();
             this.Retroalimentacion = new HashSet<Retroalimentacion>();
         }
-    
+        [Key]
+        [Required]
         public string Folio { get; set; }
         public System.DateTime Fechayhora { get; set; }
         public string Orden { get; set; }

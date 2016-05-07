@@ -11,7 +11,11 @@ namespace Buongustaio.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+    using System.Web;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Clientes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,11 +26,12 @@ namespace Buongustaio.Models
             this.Ordenes = new HashSet<Ordenes>();
             this.Retroalimentacion = new HashSet<Retroalimentacion>();
         }
-    
         public string Nombre { get; set; }
         public string Ap_paterno { get; set; }
         public string Ap_mat { get; set; }
         public string Domicilio { get; set; }
+        [Key]
+        [Required]
         public decimal Telefono { get; set; }
         public bool Es_Miembro { get; set; }
         public string Contrasena { get; set; }

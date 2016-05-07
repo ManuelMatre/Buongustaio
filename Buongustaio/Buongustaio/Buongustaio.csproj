@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Classes\IdUnico.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
+    <Compile Include="Controllers\EntitiesControllers\OrdenesController.cs" />
     <Compile Include="Controllers\EntitiesControllers\ProductosController.cs" />
     <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HelloWorldController.cs" />
@@ -309,6 +310,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\OwnScripts\Carrito.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -356,6 +358,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Facturas\" />
     <Folder Include="Views\HelloWorld\" />
+    <Folder Include="Views\Ordenes\" />
     <Folder Include="Views\SeguimientoOrden\" />
     <Folder Include="Views\Ventas\" />
   </ItemGroup>
