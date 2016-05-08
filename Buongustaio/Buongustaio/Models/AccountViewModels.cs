@@ -49,13 +49,13 @@ namespace Buongustaio.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Teléfono: ")]
+        public int Telefono { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password:")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -84,6 +84,22 @@ namespace Buongustaio.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name="Nombre")]
+        public string Nombre { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Apellido")]
+        public string Apellido { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Domicilio")]
+        public string Domicilio { get; set; }
+
     }
 
     public class ResetPasswordViewModel
