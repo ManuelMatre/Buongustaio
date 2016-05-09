@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BuongustaioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="Telefono" />
+    </Key>
+    <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Ap_paterno" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Ap_mat" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Telefono" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Es_Miembro" Type="Boolean" Nullable="false" />
+    <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Comprobantes" Relationship="Self.FK__Comproban__Clien__20C1E124" FromRole="Clientes" ToRole="Comprobantes" />
+    <NavigationProperty Name="Miembros" Relationship="Self.FK__Miembros__client__25869641" FromRole="Clientes" ToRole="Miembros" />
+    <NavigationProperty Name="Ordenes" Relationship="Self.FK__Ordenes__Cliente__267ABA7A" FromRole="Clientes" ToRole="Ordenes" />
+    <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Cliente" FromRole="Clientes" ToRole="Retroalimentacion" />
+  </EntityType>
+  <EntityType Name="Comprobantes">
+    <Key>
+      <PropertyRef Name="Folio" />
+    </Key>
+    <Property Name="Folio" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fechayhora" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Subtotal" Type="Double" Nullable="false" />
+    <Property Name="Total" Type="Double" Nullable="false" />
+    <Property Name="Descuento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="TerminacionTC" Type="Int32" Nullable="false" />
+    <Property Name="Transaccion" Type="Int32" Nullable="false" />
+    <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Comproban__Clien__20C1E124" FromRole="Comprobantes" ToRole="Clientes" />
+    <NavigationProperty Name="Ordenes" Relationship="Self.FK_Comprobantes_Orden" FromRole="Comprobantes" ToRole="Ordenes" />
+    <NavigationProperty Name="Promociones" Relationship="Self.FK_Comprobantes_Promociones" FromRole="Comprobantes" ToRole="Promociones" />
+    <NavigationProperty Name="Facturas" Relationship="Self.FK_Facturas_Comprobantes" FromRole="Comprobantes" ToRole="Facturas" />
+    <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Comprobante" FromRole="Comprobantes" ToRole="Retroalimentacion" />
+  </EntityType>
+  <EntityType Name="DatosFiscales">
+    <Key>
+      <PropertyRef Name="RFC" />
+    </Key>
+    <Property Name="RFC" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Razon_social" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Domicilio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Facturas" Relationship="Self.FK_Facturas_DatosFiscales" FromRole="DatosFiscales" ToRole="Facturas" />
+  </EntityType>
+  <EntityType Name="Facturas">
+    <Key>
+      <PropertyRef Name="Folio" />
+    </Key>
+    <Property Name="Folio" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Comprobante" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RFC" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Facturas_Comprobantes" FromRole="Facturas" ToRole="Comprobantes" />
+    <NavigationProperty Name="DatosFiscales" Relationship="Self.FK_Facturas_DatosFiscales" FromRole="Facturas" ToRole="DatosFiscales" />
+  </EntityType>
+  <EntityType Name="Miembros">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Estatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Expiracion" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Miembros__client__25869641" FromRole="Miembros" ToRole="Clientes" />
+  </EntityType>
+  <EntityType Name="Ordenes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Pedido" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Ordenes__Cliente__267ABA7A" FromRole="Ordenes" ToRole="Clientes" />
+    <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Comprobantes_Orden" FromRole="Ordenes" ToRole="Comprobantes" />
+  </EntityType>
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="140" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Double" Nullable="false" />
+    <Property Name="Ingredientes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Promociones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Descuento" Type="Int32" Nullable="false" />
+    <Property Name="Producto" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Vigencia" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Comprobantes_Promociones" FromRole="Promociones" ToRole="Comprobantes" />
+  </EntityType>
+  <EntityType Name="Retroalimentacion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Estado_orden" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Nivel_satisfaccion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Retroalimentacion_Cliente" FromRole="Retroalimentacion" ToRole="Clientes" />
+    <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Retroalimentacion_Comprobante" FromRole="Retroalimentacion" ToRole="Comprobantes" />
+  </EntityType>
+  <Association Name="FK__Comproban__Clien__20C1E124">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="Telefono" />
+      </Principal>
+      <Dependent Role="Comprobantes">
+        <PropertyRef Name="Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Miembros__client__25869641">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="Telefono" />
+      </Principal>
+      <Dependent Role="Miembros">
+        <PropertyRef Name="cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ordenes__Cliente__267ABA7A">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="Telefono" />
+      </Principal>
+      <Dependent Role="Ordenes">
+        <PropertyRef Name="Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Retroalimentacion_Cliente">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Retroalimentacion" Type="Self.Retroalimentacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="Telefono" />
+      </Principal>
+      <Dependent Role="Retroalimentacion">
+        <PropertyRef Name="Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comprobantes_Orden">
+    <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="1" />
+    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ordenes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comprobantes">
+        <PropertyRef Name="Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comprobantes_Promociones">
+    <End Role="Promociones" Type="Self.Promociones" Multiplicity="0..1" />
+    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promociones">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comprobantes">
+        <PropertyRef Name="Descuento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Facturas_Comprobantes">
+    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="1" />
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comprobantes">
+        <PropertyRef Name="Folio" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="Comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Retroalimentacion_Comprobante">
+    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="1" />
+    <End Role="Retroalimentacion" Type="Self.Retroalimentacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comprobantes">
+        <PropertyRef Name="Folio" />
+      </Principal>
+      <Dependent Role="Retroalimentacion">
+        <PropertyRef Name="Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Facturas_DatosFiscales">
+    <End Role="DatosFiscales" Type="Self.DatosFiscales" Multiplicity="1" />
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DatosFiscales">
+        <PropertyRef Name="RFC" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="RFC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BuongustaioEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="Comprobantes" EntityType="Self.Comprobantes" />
+    <EntitySet Name="DatosFiscales" EntityType="Self.DatosFiscales" />
+    <EntitySet Name="Facturas" EntityType="Self.Facturas" />
+    <EntitySet Name="Miembros" EntityType="Self.Miembros" />
+    <EntitySet Name="Ordenes" EntityType="Self.Ordenes" />
+    <EntitySet Name="Productos" EntityType="Self.Productos" />
+    <EntitySet Name="Promociones" EntityType="Self.Promociones" />
+    <EntitySet Name="Retroalimentacion" EntityType="Self.Retroalimentacion" />
+    <AssociationSet Name="FK__Comproban__Clien__20C1E124" Association="Self.FK__Comproban__Clien__20C1E124">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Comprobantes" EntitySet="Comprobantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Miembros__client__25869641" Association="Self.FK__Miembros__client__25869641">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Miembros" EntitySet="Miembros" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ordenes__Cliente__267ABA7A" Association="Self.FK__Ordenes__Cliente__267ABA7A">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Ordenes" EntitySet="Ordenes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Retroalimentacion_Cliente" Association="Self.FK_Retroalimentacion_Cliente">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comprobantes_Orden" Association="Self.FK_Comprobantes_Orden">
+      <End Role="Ordenes" EntitySet="Ordenes" />
+      <End Role="Comprobantes" EntitySet="Comprobantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comprobantes_Promociones" Association="Self.FK_Comprobantes_Promociones">
+      <End Role="Promociones" EntitySet="Promociones" />
+      <End Role="Comprobantes" EntitySet="Comprobantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Facturas_Comprobantes" Association="Self.FK_Facturas_Comprobantes">
+      <End Role="Comprobantes" EntitySet="Comprobantes" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Retroalimentacion_Comprobante" Association="Self.FK_Retroalimentacion_Comprobante">
+      <End Role="Comprobantes" EntitySet="Comprobantes" />
+      <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Facturas_DatosFiscales" Association="Self.FK_Facturas_DatosFiscales">
+      <End Role="DatosFiscales" EntitySet="DatosFiscales" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <EntitySet Name="Ingredientes" EntityType="BuongustaioModel.Ingredientes" />
+  </EntityContainer>
+  <EntityType Name="Ingredientes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Lote" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Ingrediente" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Cantidad" Type="Double" Nullable="false" />
+    <Property Name="Fecha_Compra" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Fecha_Expiracion" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+</Schema>

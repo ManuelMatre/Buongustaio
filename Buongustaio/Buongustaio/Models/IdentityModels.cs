@@ -29,5 +29,9 @@ namespace Buongustaio.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Productos> Productos { get; set; }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Ordenes> Ordenes { get; set; }
     }
 }

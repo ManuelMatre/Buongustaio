@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Buongustaio.Models.Productos>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.HeaderOption = "<li style=\"float:right\"><a onclick=\"enviarPedido()\" class=\"btn btn-default\" role =\"button\" >Terminar y Pagar</a></li>";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
+}
+
+<!--<p>
+    //Html.ActionLink("Create New", "Create")
+</p>-->
+
+<div class="wrap">
+    <main>
+        <aside>
+            <p>
+                @for (int i = 0; i < 3; i++)
+                {
+                    <div class="row">
+                        @for (int j = 0; j < 4; j++)
+                        {
+                            if (counter < Model.Count())
+                            {
+                                <div class="col-xs-6 col-md-3">
+                                    <div class="thumbnail">
+                                        <img src="@Url.Content(Model.ElementAt(counter).Imagen)" style="height:120px" alt="...">
+                                        <div class="caption">
+                                            <h3>@Model.ElementAt(counter).Descripcion</h3>
+                                            <p>$@Model.ElementAt(counter).Precio</p>
+                                            <div>
+                                                <div style="width: 70%; float:left">
+                                                    <input type="text" class="form-control" placeholder="Cantidad" aria-describedby="basic-addon2" id="@Model.ElementAt(counter).Id">
+                                                </div>
+                                                <div style="width: 30%; float:right">
+                                                    <a onclick="agregarProducto(this)" class="btn btn-default" role="button" value="@Model.ElementAt(counter).Id">
+                                                        +<span class="glyphicon glyphicon-shopping-cart" style="color:blue;" aria-hidden="true"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            counter++;
+                        }
+                    </div>
+                }
+            </p>
+        </aside>
+    </main>
+</div>
+
+@Scripts.Render("~/Scripts/OwnScripts/Carrito.js")
