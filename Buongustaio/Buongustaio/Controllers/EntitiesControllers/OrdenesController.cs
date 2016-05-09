@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Buongustaio.Models;
+using Buongustaio.Classes;
 
 namespace Buongustaio.Controllers.EntitiesControllers
 {
@@ -46,9 +47,12 @@ namespace Buongustaio.Controllers.EntitiesControllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes)
         {
+            ordenes.Id = IdUnico.GetUniqueKey();
+            ordenes.Fecha = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Ordenes.Add(ordenes);

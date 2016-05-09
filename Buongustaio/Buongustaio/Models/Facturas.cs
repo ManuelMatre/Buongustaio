@@ -11,12 +11,9 @@ namespace Buongustaio.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Facturas
     {
-        [Key]
-        [Required]
         public string Folio { get; set; }
         public string Comprobante { get; set; }
         public string RFC { get; set; }

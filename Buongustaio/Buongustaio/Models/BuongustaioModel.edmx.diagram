@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="BuongustaioModel.Productos" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Promociones" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Retroalimentacion" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BuongustaioModel.Ingredientes" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="BuongustaioModel.FK__Comproban__Clien__20C1E124" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK__Miembros__client__25869641" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK__Ordenes__Cliente__267ABA7A" ManuallyRouted="false" />
@@ -24,6 +23,7 @@
         <AssociationConnector Association="BuongustaioModel.FK_Facturas_Comprobantes" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Retroalimentacion_Comprobante" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Facturas_DatosFiscales" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BuongustaioModel.Ingredientes" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

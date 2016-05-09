@@ -10,12 +10,12 @@ function agregarProducto(producto) {
     carrito[carrito.length] = item;
 }
 
-/*function enviarPedido() {
-    $.post('sendInfo', {
-        //_token: $('meta[name=csrf-token]').attr('content'),
-        //validate: (counter - totalPages),
-        array: JSON.stringify(carrito),
-        user: userid
+function enviarPedido() {
+    $.post('../Ordenes/Create', {
+        Id: '0',
+        Cliente: '6622782870',
+        Pedido:JSON.stringify(carrito),
+        Fecha: Date().toString()
     })
     .done(function (data) {
         if (data == 0) {
@@ -30,5 +30,5 @@ function agregarProducto(producto) {
     .fail(function () {
         alert("error");
     });
-}*/
+}
 
