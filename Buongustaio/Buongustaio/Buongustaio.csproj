@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -195,7 +197,10 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Classes\IdUnico.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
+    <Compile Include="Controllers\EntitiesControllers\OrdenesController.cs" />
+    <Compile Include="Controllers\EntitiesControllers\ProductosController.cs" />
     <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HelloWorldController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -206,18 +211,81 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BuongustaioModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BuongustaioModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BuongustaioModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BuongustaioModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BuongustaioModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Clientes.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comprobantes.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DatosFiscales.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Facturas.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Ingredientes.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Miembros.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ordenes.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Productos.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Promociones.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Retroalimentacion.cs">
+      <DependentUpon>BuongustaioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Carta.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Brocheta.jpg" />
+    <Content Include="Images\Lasagna.jpg" />
+    <Content Include="Images\Logo.png" />
+    <Content Include="Images\Penne.jpg" />
+    <Content Include="Images\Pimiento.jpg" />
+    <Content Include="Images\Pizza.jpg" />
+    <Content Include="Images\Spaggetti.jpg" />
+    <Content Include="Models\BuongustaioModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BuongustaioModel.edmx</DependentUpon>
+      <LastGenOutput>BuongustaioModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\BuongustaioModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BuongustaioModel.edmx</DependentUpon>
+      <LastGenOutput>BuongustaioModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -225,6 +293,14 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EntityDeploy Include="Models\BuongustaioModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BuongustaioModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BuongustaioModel.edmx.diagram">
+      <DependentUpon>BuongustaioModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Content\navbar-fixed-side.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -234,6 +310,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\OwnScripts\Carrito.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -271,11 +348,17 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Productos\Create.cshtml" />
+    <Content Include="Views\Productos\Delete.cshtml" />
+    <Content Include="Views\Productos\Details.cshtml" />
+    <Content Include="Views\Productos\Edit.cshtml" />
+    <Content Include="Views\Productos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Facturas\" />
     <Folder Include="Views\HelloWorld\" />
+    <Folder Include="Views\Ordenes\" />
     <Folder Include="Views\SeguimientoOrden\" />
     <Folder Include="Views\Ventas\" />
   </ItemGroup>
@@ -286,6 +369,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
