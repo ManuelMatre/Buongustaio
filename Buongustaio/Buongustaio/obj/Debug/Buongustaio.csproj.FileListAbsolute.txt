@@ -161,3 +161,4 @@ C:\Users\Manuel\Source\Repos\buongustaio\Buongustaio\Buongustaio\bin\Microsoft.O
 C:\Users\Manuel\Source\Repos\buongustaio\Buongustaio\Buongustaio\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Manuel\Source\Repos\buongustaio\Buongustaio\Buongustaio\obj\Debug\Buongustaio.dll
 C:\Users\Manuel\Source\Repos\buongustaio\Buongustaio\Buongustaio\obj\Debug\Buongustaio.pdb
+C:\Users\Manuel\Source\Repos\buongustaio\Buongustaio\Buongustaio\obj\Debug\Buongustaio.csprojResolveAssemblyReference.cache

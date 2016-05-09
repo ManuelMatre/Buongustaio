@@ -15,7 +15,7 @@ function enviarPedido() {
         Id: '0',
         Cliente: '6622782870',
         Pedido:JSON.stringify(carrito),
-        Fecha: Date().toString()
+        Fecha: '02-02-2016'
     })
     .done(function (data) {
         if (data == 0) {
