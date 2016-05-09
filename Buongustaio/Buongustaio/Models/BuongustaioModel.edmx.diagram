@@ -4,14 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6ca41373f7214fff88e09a963ada5231" Name="Diagram1">
+      <Diagram DiagramId="63ed5e90577f478c8268a3fe8c360ffe" Name="Diagram1">
         <EntityTypeShape EntityType="BuongustaioModel.Clientes" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Comprobantes" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.DatosFiscales" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Facturas" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BuongustaioModel.Ingredientes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Miembros" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Ordenes" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BuongustaioModel.Productos" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BuongustaioModel.Productos" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Promociones" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Retroalimentacion" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
         <AssociationConnector Association="BuongustaioModel.FK__Comproban__Clien__20C1E124" ManuallyRouted="false" />
@@ -23,7 +24,6 @@
         <AssociationConnector Association="BuongustaioModel.FK_Facturas_Comprobantes" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Retroalimentacion_Comprobante" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Facturas_DatosFiscales" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="BuongustaioModel.Ingredientes" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

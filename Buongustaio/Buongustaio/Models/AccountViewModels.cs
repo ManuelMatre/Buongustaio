@@ -51,7 +51,7 @@ namespace Buongustaio.Models
         [Required]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Teléfono: ")]
-        public int Telefono { get; set; }
+        public string Telefono { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
