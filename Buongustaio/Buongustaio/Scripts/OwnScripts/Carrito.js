@@ -10,25 +10,18 @@ function agregarProducto(producto) {
     carrito[carrito.length] = item;
 }
 
-function enviarPedido() {
-    $.post('../Ordenes/Create', {
-        Id: '0',
+function enviarPedido(actionLink) {
+    $.post(actionLink, {
+        Id: '1',
         Cliente: '6622782870',
         Pedido:JSON.stringify(carrito),
         Fecha: '02-02-2016'
     })
-    .done(function (data) {
-        if (data == 0) {
-            swal("Examen enviado", "", "success");
-            setTimeout(function () {
-                window.location.assign("/modules/selectTest")
-            }, 3000);
-        } else {
-            alert(data);
-        }
+    .done(function () {
+        alert("Orden Registrada", "", "success");
     })
     .fail(function () {
-        alert("error");
+        alert("Error", "", "success");
     });
 }
 
