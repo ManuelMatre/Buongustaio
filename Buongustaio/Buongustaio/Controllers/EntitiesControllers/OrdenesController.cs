@@ -60,7 +60,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
                 return RedirectToAction("Index");
             }
 
-            return View(ordenes);
+            return View("~/Views/Home/Index.aspx");
         }
 
         // GET: Ordenes/Edit/5

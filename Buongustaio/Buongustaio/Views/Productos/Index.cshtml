@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    ViewBag.HeaderOption = "<li style=\"float:right\"><a onclick=\"enviarPedido()\" class=\"btn btn-default\" role =\"button\" >Terminar y Pagar</a></li>";
+    ViewBag.HeaderOption = "<li style=\"float:right\"><a onclick=\"enviarPedido('../Ordenes/Create')\" class=\"btn btn-default\" role =\"button\" >Terminar y Pagar</a></li>";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int counter = 0;
 }
