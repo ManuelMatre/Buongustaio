@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BuongustaioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BuongustaioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="Telefono" />
@@ -264,7 +264,8 @@
             <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BuongustaioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -323,6 +324,17 @@
           <Property Name="RFC" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Facturas_Comprobantes" FromRole="Facturas" ToRole="Comprobantes" />
           <NavigationProperty Name="DatosFiscales" Relationship="Self.FK_Facturas_DatosFiscales" FromRole="Facturas" ToRole="DatosFiscales" />
+        </EntityType>
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Lote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ingrediente" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Fecha_Compra" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Expiracion" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="Miembros">
           <Key>
@@ -486,11 +498,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BuongustaioEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Clientes" EntityType="Self.Clientes" />
           <EntitySet Name="Comprobantes" EntityType="Self.Comprobantes" />
           <EntitySet Name="DatosFiscales" EntityType="Self.DatosFiscales" />
           <EntitySet Name="Facturas" EntityType="Self.Facturas" />
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
           <EntitySet Name="Miembros" EntityType="Self.Miembros" />
           <EntitySet Name="Ordenes" EntityType="Self.Ordenes" />
           <EntitySet Name="Productos" EntityType="Self.Productos" />
@@ -532,25 +545,13 @@
             <End Role="DatosFiscales" EntitySet="DatosFiscales" />
             <End Role="Facturas" EntitySet="Facturas" />
           </AssociationSet>
-          <EntitySet Name="Ingredientes" EntityType="BuongustaioModel.Ingredientes" />
         </EntityContainer>
-        <EntityType Name="Ingredientes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Lote" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Ingrediente" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="Fecha_Compra" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Expiracion" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BuongustaioModelStoreContainer" CdmEntityContainer="BuongustaioEntities">
+        <EntityContainerMapping StorageEntityContainer="BuongustaioModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Clientes">
             <EntityTypeMapping TypeName="BuongustaioModel.Clientes">
               <MappingFragment StoreEntitySet="Clientes">
@@ -596,6 +597,18 @@
                 <ScalarProperty Name="Folio" ColumnName="Folio" />
                 <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
                 <ScalarProperty Name="RFC" ColumnName="RFC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredientes">
+            <EntityTypeMapping TypeName="BuongustaioModel.Ingredientes">
+              <MappingFragment StoreEntitySet="Ingredientes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="Ingrediente" ColumnName="Ingrediente" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Fecha_Compra" ColumnName="Fecha_Compra" />
+                <ScalarProperty Name="Fecha_Expiracion" ColumnName="Fecha_Expiracion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -652,18 +665,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ingredientes">
-            <EntityTypeMapping TypeName="BuongustaioModel.Ingredientes">
-              <MappingFragment StoreEntitySet="Ingredientes">
-                <ScalarProperty Name="Fecha_Expiracion" ColumnName="Fecha_Expiracion" />
-                <ScalarProperty Name="Fecha_Compra" ColumnName="Fecha_Compra" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Ingrediente" ColumnName="Ingrediente" />
-                <ScalarProperty Name="Lote" ColumnName="Lote" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -681,7 +682,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
