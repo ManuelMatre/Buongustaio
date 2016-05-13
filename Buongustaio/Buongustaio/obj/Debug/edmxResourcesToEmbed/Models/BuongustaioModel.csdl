@@ -7,7 +7,7 @@
     <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Ap_paterno" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Ap_mat" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Domicilio" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Telefono" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
     <Property Name="Es_Miembro" Type="Boolean" Nullable="false" />
     <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -109,6 +109,21 @@
     <Property Name="Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Clientes" Relationship="Self.FK_Retroalimentacion_Cliente" FromRole="Retroalimentacion" ToRole="Clientes" />
     <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Retroalimentacion_Comprobante" FromRole="Retroalimentacion" ToRole="Comprobantes" />
+  </EntityType>
+  <EntityType Name="Ingredientes">
+    <Key>
+      <PropertyRef Name="Lote" />
+      <PropertyRef Name="Ingrediente" />
+      <PropertyRef Name="Cantidad" />
+      <PropertyRef Name="Fecha_Compra" />
+      <PropertyRef Name="Fecha_Expiracion" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Lote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ingrediente" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cantidad" Type="Double" Nullable="false" />
+    <Property Name="Fecha_Compra" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Fecha_Expiracion" Type="DateTime" Nullable="false" Precision="0" />
   </EntityType>
   <Association Name="FK__Comproban__Clien__20C1E124">
     <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
@@ -218,7 +233,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="BuongustaioEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Clientes" EntityType="Self.Clientes" />
     <EntitySet Name="Comprobantes" EntityType="Self.Comprobantes" />
     <EntitySet Name="DatosFiscales" EntityType="Self.DatosFiscales" />
@@ -228,6 +243,7 @@
     <EntitySet Name="Productos" EntityType="Self.Productos" />
     <EntitySet Name="Promociones" EntityType="Self.Promociones" />
     <EntitySet Name="Retroalimentacion" EntityType="Self.Retroalimentacion" />
+    <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
     <AssociationSet Name="FK__Comproban__Clien__20C1E124" Association="Self.FK__Comproban__Clien__20C1E124">
       <End Role="Clientes" EntitySet="Clientes" />
       <End Role="Comprobantes" EntitySet="Comprobantes" />
@@ -264,17 +280,5 @@
       <End Role="DatosFiscales" EntitySet="DatosFiscales" />
       <End Role="Facturas" EntitySet="Facturas" />
     </AssociationSet>
-    <EntitySet Name="Ingredientes" EntityType="BuongustaioModel.Ingredientes" />
   </EntityContainer>
-  <EntityType Name="Ingredientes">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Lote" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="Ingrediente" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Cantidad" Type="Double" Nullable="false" />
-    <Property Name="Fecha_Compra" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Fecha_Expiracion" Type="DateTime" Nullable="false" Precision="0" />
-  </EntityType>
 </Schema>

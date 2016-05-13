@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="BuongustaioModelStoreContainer" CdmEntityContainer="BuongustaioEntities">
+  <EntityContainerMapping StorageEntityContainer="BuongustaioModelStoreContainer" CdmEntityContainer="Entities">
     <EntitySetMapping Name="Clientes">
       <EntityTypeMapping TypeName="BuongustaioModel.Clientes">
         <MappingFragment StoreEntitySet="Clientes">
@@ -105,12 +105,12 @@
     <EntitySetMapping Name="Ingredientes">
       <EntityTypeMapping TypeName="BuongustaioModel.Ingredientes">
         <MappingFragment StoreEntitySet="Ingredientes">
-          <ScalarProperty Name="Fecha_Expiracion" ColumnName="Fecha_Expiracion" />
-          <ScalarProperty Name="Fecha_Compra" ColumnName="Fecha_Compra" />
-          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-          <ScalarProperty Name="Ingrediente" ColumnName="Ingrediente" />
-          <ScalarProperty Name="Lote" ColumnName="Lote" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Lote" ColumnName="Lote" />
+          <ScalarProperty Name="Ingrediente" ColumnName="Ingrediente" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Fecha_Compra" ColumnName="Fecha_Compra" />
+          <ScalarProperty Name="Fecha_Expiracion" ColumnName="Fecha_Expiracion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
