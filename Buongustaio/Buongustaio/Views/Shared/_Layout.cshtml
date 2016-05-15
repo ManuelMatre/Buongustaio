@@ -15,7 +15,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -27,40 +27,55 @@
             </div>
         </div>
     </div>
+  
     <div id="wrapper">
-
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-
                 <li class="active">
                     <a href="~/Home/Index"><span class="fa-stack fa-lg pull-left"></span> Inicio</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="~/Cuentas/Login">Log In</a></li>
-                        <li><a href="~/Cuentas/Register">Regístrate</a></li>
-                        <li><a href="#">Membresias</a></li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Cuentas", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                                <li><a href="#">Membresias</a></li>
+
+                            }
+                        }
+                        else
+                        {
+                            <li><a href="~/Cuentas/Login">Log In</a></li>
+                            <li><a href="~/Cuentas/Register">Regístrar</a></li>
+                            <li><a href="#">Membresias</a></li>
+                        }
                     </ul>
                 </li>
                 <li>
                     <a href="#"><span class="fa-stack fa-lg pull-left"></span>Menú de Platillos</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
-
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Entradas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Sopas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Pastas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Pizzas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Cremas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Bebidas</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#"><span class="fa-stack fa-lg pull-left"></span>Pagos</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Paga tu Orden</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Membresias</a></li>
 
                     </ul>
                 </li>
                 <li>
                     <a href="#"><span class="fa-stack fa-lg pull-left"></span>Facturas</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Alta de RFC</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Facturación</a></li>
 
                     </ul>
                 </li>
@@ -75,36 +90,9 @@
                 <li>
                     <a href="#"><span class="fa-stack fa-lg pull-left"></span>Sigue tu Orden</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
-
                     </ul>
                 </li>
             </ul>
-                
-                @*
-                <li>
-                    <a href="/home/index">Dashboard</a>
-                </li>
-                <li>
-                    <a href="/Banco/PagoGUI">Shortcuts</a>
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>*@
-            
         </div>
 
         <div class="col-md-12 col-md-12 affix-content">

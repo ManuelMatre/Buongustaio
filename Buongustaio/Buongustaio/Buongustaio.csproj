@@ -200,6 +200,7 @@
     <Compile Include="Classes\IdUnico.cs" />
     <Compile Include="Controllers\BancoController.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
+    <Compile Include="Controllers\EntitiesControllers\ComprobantesController.cs" />
     <Compile Include="Controllers\EntitiesControllers\OrdenesController.cs" />
     <Compile Include="Controllers\EntitiesControllers\ProductosController.cs" />
     <Compile Include="Controllers\FacturasController.cs" />
@@ -362,6 +363,11 @@
     <Content Include="Views\Productos\Details.cshtml" />
     <Content Include="Views\Productos\Edit.cshtml" />
     <Content Include="Views\Productos\Index.cshtml" />
+    <Content Include="Views\Comprobantes\Create.cshtml" />
+    <Content Include="Views\Comprobantes\Delete.cshtml" />
+    <Content Include="Views\Comprobantes\Details.cshtml" />
+    <Content Include="Views\Comprobantes\Edit.cshtml" />
+    <Content Include="Views\Comprobantes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -127,4 +127,16 @@
         position: relative;
         margin-right: 0;
     }
-}
+}.navbar-collapse{
+    padding: 0;
+  }
+ .affix-sidebar{
+    padding-right:0; 
+    font-size:small;
+    padding-left: 0;
+  }  
+
+.sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+  }
