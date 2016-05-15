@@ -7,7 +7,7 @@
     <Property Name="Nombre" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="Ap_paterno" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="Ap_mat" Type="nchar" MaxLength="10" />
-    <Property Name="Domicilio" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Domicilio" Type="nchar" MaxLength="50" Nullable="false" />
     <Property Name="Telefono" Type="numeric" Precision="10" Scale="0" Nullable="false" />
     <Property Name="Es_Miembro" Type="bit" Nullable="false" />
     <Property Name="Contrasena" Type="varchar" MaxLength="50" Nullable="false" />
@@ -44,17 +44,11 @@
     <Property Name="Comprobante" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="RFC" Type="varchar" MaxLength="12" Nullable="false" />
   </EntityType>
-  <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="Ingredientes">
     <Key>
-      <PropertyRef Name="Lote" />
-      <PropertyRef Name="Ingrediente" />
-      <PropertyRef Name="Cantidad" />
-      <PropertyRef Name="Fecha_Compra" />
-      <PropertyRef Name="Fecha_Expiracion" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="nvarchar" MaxLength="10" />
+    <Property Name="Id" Type="nchar" MaxLength="10" Nullable="false" />
     <Property Name="Lote" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="Ingrediente" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="Cantidad" Type="float" Nullable="false" />
@@ -79,6 +73,27 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
     <Property Name="Pedido" Type="nchar" MaxLength="200" Nullable="false" />
     <Property Name="Fecha" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Pagos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="NumTarjeta" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Expiracion" Type="nchar" MaxLength="5" Nullable="false" />
+    <Property Name="Propietario" Type="nchar" MaxLength="30" />
+    <Property Name="Clave" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+    <Property Name="Cantidad" Type="float" Nullable="false" />
+    <Property Name="Transaccion" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Cliente" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Pedido" Type="nchar" MaxLength="200" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="Productos">
     <Key>
       <PropertyRef Name="Id" />
@@ -88,15 +103,7 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
     <Property Name="Precio" Type="float" Nullable="false" />
     <Property Name="Ingredientes" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="Imagen" Type="varchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Promociones">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="Descuento" Type="int" Nullable="false" />
-    <Property Name="Producto" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="Vigencia" Type="int" Nullable="false" />
+    <Property Name="Descuento" Type="float" />
   </EntityType>
   <EntityType Name="Retroalimentacion">
     <Key>
@@ -134,7 +141,9 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Ordenes__Cliente__267ABA7A">
-    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Clientes">
@@ -145,11 +154,13 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Comprobantes_Orden">
-    <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="1" />
+  <Association Name="FK_Comprobantes_Pedidos">
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Ordenes">
+      <Principal Role="Pedidos">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Comprobantes">
@@ -157,20 +168,10 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Comprobantes_Promociones">
-    <End Role="Promociones" Type="Self.Promociones" Multiplicity="0..1" />
-    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Promociones">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Comprobantes">
-        <PropertyRef Name="Descuento" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Facturas_Comprobantes">
-    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="1" />
+    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Comprobantes">
@@ -205,12 +206,14 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Retroalimentacion_Comprobante">
-    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="1" />
+  <Association Name="FK_Retroalimentacion_Pedidos">
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Retroalimentacion" Type="Self.Retroalimentacion" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Comprobantes">
-        <PropertyRef Name="Folio" />
+      <Principal Role="Pedidos">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Retroalimentacion">
         <PropertyRef Name="Orden" />
@@ -222,21 +225,13 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
     <EntitySet Name="Comprobantes" EntityType="Self.Comprobantes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DatosFiscales" EntityType="Self.DatosFiscales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Facturas" EntityType="Self.Facturas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Miembros" EntityType="Self.Miembros" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ordenes" EntityType="Self.Ordenes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pagos" EntityType="Self.Pagos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Promociones" EntityType="Self.Promociones" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Retroalimentacion" EntityType="Self.Retroalimentacion" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Ingredientes].[Id] AS [Id], 
-    [Ingredientes].[Lote] AS [Lote], 
-    [Ingredientes].[Ingrediente] AS [Ingrediente], 
-    [Ingredientes].[Cantidad] AS [Cantidad], 
-    [Ingredientes].[Fecha_Compra] AS [Fecha_Compra], 
-    [Ingredientes].[Fecha_Expiracion] AS [Fecha_Expiracion]
-    FROM [dbo].[Ingredientes] AS [Ingredientes]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK__Comproban__Clien__20C1E124" Association="Self.FK__Comproban__Clien__20C1E124">
       <End Role="Clientes" EntitySet="Clientes" />
       <End Role="Comprobantes" EntitySet="Comprobantes" />
@@ -249,12 +244,8 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
       <End Role="Clientes" EntitySet="Clientes" />
       <End Role="Ordenes" EntitySet="Ordenes" />
     </AssociationSet>
-    <AssociationSet Name="FK_Comprobantes_Orden" Association="Self.FK_Comprobantes_Orden">
-      <End Role="Ordenes" EntitySet="Ordenes" />
-      <End Role="Comprobantes" EntitySet="Comprobantes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Comprobantes_Promociones" Association="Self.FK_Comprobantes_Promociones">
-      <End Role="Promociones" EntitySet="Promociones" />
+    <AssociationSet Name="FK_Comprobantes_Pedidos" Association="Self.FK_Comprobantes_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
       <End Role="Comprobantes" EntitySet="Comprobantes" />
     </AssociationSet>
     <AssociationSet Name="FK_Facturas_Comprobantes" Association="Self.FK_Facturas_Comprobantes">
@@ -269,8 +260,8 @@ advertencia 6002: La tabla o vista 'Buongustaio.dbo.Ingredientes' no tiene defin
       <End Role="Clientes" EntitySet="Clientes" />
       <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
     </AssociationSet>
-    <AssociationSet Name="FK_Retroalimentacion_Comprobante" Association="Self.FK_Retroalimentacion_Comprobante">
-      <End Role="Comprobantes" EntitySet="Comprobantes" />
+    <AssociationSet Name="FK_Retroalimentacion_Pedidos" Association="Self.FK_Retroalimentacion_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
       <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
     </AssociationSet>
   </EntityContainer>

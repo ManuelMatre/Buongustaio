@@ -11,35 +11,23 @@ namespace Buongustaio.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    public partial class Clientes
+    
+    public partial class Pedidos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Clientes()
+        public Pedidos()
         {
             this.Comprobantes = new HashSet<Comprobantes>();
-            this.Miembros = new HashSet<Miembros>();
-            this.Ordenes = new HashSet<Ordenes>();
             this.Retroalimentacion = new HashSet<Retroalimentacion>();
         }
     
-        public string Nombre { get; set; }
-        public string Ap_paterno { get; set; }
-        public string Ap_mat { get; set; }
-        public string Domicilio { get; set; }
-
-        [Key]
-        [Required]
-        public decimal Telefono { get; set; }
-        public bool Es_Miembro { get; set; }
-        public string Contrasena { get; set; }
+        public string Id { get; set; }
+        public decimal Cliente { get; set; }
+        public string Pedido { get; set; }
+        public System.DateTime Fecha { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comprobantes> Comprobantes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Miembros> Miembros { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ordenes> Ordenes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Retroalimentacion> Retroalimentacion { get; set; }
     }
