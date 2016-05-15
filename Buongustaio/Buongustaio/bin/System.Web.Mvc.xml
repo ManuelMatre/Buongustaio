@@ -1789,7 +1789,7 @@
       <param name="prefix">A prefix to use when looking up values in the value provider.</param>
       <param name="includeProperties">A list of properties of the model to update.</param>
       <param name="excludeProperties">A list of properties to explicitly exclude from the update. These are excluded even if they are listed in the includeProperties list.</param>
-      <typeparam name="TModel">The type of t@Åu7GÄº6øÎ·4ect.</typeparam>
+      <typeparam name="TModel">The type of the model object.</typeparam>
     </member>
     <member name="M:System.Web.Mvc.Controller.UpdateModel``1(``0,System.String,System.String[],System.String[],System.Web.Mvc.IValueProvider)">
       <summary>Updates the specified model instance using values from the value provider, a prefix, a list of properties to exclude, and a list of properties to include.</summary>

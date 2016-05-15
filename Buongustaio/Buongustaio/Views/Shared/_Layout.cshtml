@@ -53,9 +53,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"></span>Menú de Platillos</a>
+                    <a href="" onclick="@*showMenu()*@"><span class="fa-stack fa-lg pull-left"></span>Menú de Platillos</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Entradas</a></li>
+                        <li><a href="~/Productos/Index"><span class="fa-stack fa-lg pull-left"></span>Entradas</a></li>
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Sopas</a></li>
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Pastas</a></li>
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Pizzas</a></li>
@@ -98,6 +98,7 @@
         <div class="col-md-12 col-md-12 affix-content">
             <ul class="nav nav-pills" style="padding-bottom:-5px">
                 @Html.Raw(ViewBag.HeaderOption)
+                @Html.Raw(ViewBag.NumPlatillos)
             </ul>
 
             <div id="modalShareBody" class="modal-body">
@@ -116,6 +117,7 @@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/Scripts/arbol-lista.js")
+        @Scripts.Render("~/Scripts/OwnScripts/SideMenu.js")
         @RenderSection("scripts", required: false)
 </body>
 </html>

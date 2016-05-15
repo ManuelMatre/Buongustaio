@@ -98,10 +98,11 @@
     margin: 0;
   }
   .navbar-collapse{
+    background-color: black;
     padding: 0;
   }
   .sidebar-nav .navbar li a:hover {
-    background-color: #428bca;
+    background-color: black/*#428bca*/;
     color: white;
   }
   .sidebar-nav .navbar li a > .caret {
