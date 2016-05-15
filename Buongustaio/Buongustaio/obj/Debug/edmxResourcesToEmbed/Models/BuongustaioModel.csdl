@@ -7,7 +7,7 @@
     <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Ap_paterno" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Ap_mat" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Domicilio" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Telefono" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
     <Property Name="Es_Miembro" Type="Boolean" Nullable="false" />
     <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -31,9 +31,9 @@
     <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
     <NavigationProperty Name="Clientes" Relationship="Self.FK__Comproban__Clien__20C1E124" FromRole="Comprobantes" ToRole="Clientes" />
     <NavigationProperty Name="Ordenes" Relationship="Self.FK_Comprobantes_Orden" FromRole="Comprobantes" ToRole="Ordenes" />
-    <NavigationProperty Name="Promociones" Relationship="Self.FK_Comprobantes_Promociones" FromRole="Comprobantes" ToRole="Promociones" />
     <NavigationProperty Name="Facturas" Relationship="Self.FK_Facturas_Comprobantes" FromRole="Comprobantes" ToRole="Facturas" />
     <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Comprobante" FromRole="Comprobantes" ToRole="Retroalimentacion" />
+    <NavigationProperty Name="Pedidos" Relationship="BuongustaioModel.FK_Comprobantes_Pedidos" FromRole="Comprobantes" ToRole="Pedidos" />
   </EntityType>
   <EntityType Name="DatosFiscales">
     <Key>
@@ -86,16 +86,7 @@
     <Property Name="Precio" Type="Double" Nullable="false" />
     <Property Name="Ingredientes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Promociones">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Descuento" Type="Int32" Nullable="false" />
-    <Property Name="Producto" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Vigencia" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Comprobantes_Promociones" FromRole="Promociones" ToRole="Comprobantes" />
+    <Property Name="Descuento" Type="Double" />
   </EntityType>
   <EntityType Name="Retroalimentacion">
     <Key>
@@ -109,6 +100,7 @@
     <Property Name="Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Clientes" Relationship="Self.FK_Retroalimentacion_Cliente" FromRole="Retroalimentacion" ToRole="Clientes" />
     <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Retroalimentacion_Comprobante" FromRole="Retroalimentacion" ToRole="Comprobantes" />
+    <NavigationProperty Name="Pedidos" Relationship="BuongustaioModel.FK_Retroalimentacion_Pedidos" FromRole="Retroalimentacion" ToRole="Pedidos" />
   </EntityType>
   <EntityType Name="Ingredientes">
     <Key>
@@ -118,7 +110,7 @@
       <PropertyRef Name="Fecha_Compra" />
       <PropertyRef Name="Fecha_Expiracion" />
     </Key>
-    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Lote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Ingrediente" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Cantidad" Type="Double" Nullable="false" />
@@ -185,18 +177,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Comprobantes_Promociones">
-    <End Role="Promociones" Type="Self.Promociones" Multiplicity="0..1" />
-    <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Promociones">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Comprobantes">
-        <PropertyRef Name="Descuento" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Facturas_Comprobantes">
     <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="1" />
     <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
@@ -241,7 +221,6 @@
     <EntitySet Name="Miembros" EntityType="Self.Miembros" />
     <EntitySet Name="Ordenes" EntityType="Self.Ordenes" />
     <EntitySet Name="Productos" EntityType="Self.Productos" />
-    <EntitySet Name="Promociones" EntityType="Self.Promociones" />
     <EntitySet Name="Retroalimentacion" EntityType="Self.Retroalimentacion" />
     <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
     <AssociationSet Name="FK__Comproban__Clien__20C1E124" Association="Self.FK__Comproban__Clien__20C1E124">
@@ -264,10 +243,6 @@
       <End Role="Ordenes" EntitySet="Ordenes" />
       <End Role="Comprobantes" EntitySet="Comprobantes" />
     </AssociationSet>
-    <AssociationSet Name="FK_Comprobantes_Promociones" Association="Self.FK_Comprobantes_Promociones">
-      <End Role="Promociones" EntitySet="Promociones" />
-      <End Role="Comprobantes" EntitySet="Comprobantes" />
-    </AssociationSet>
     <AssociationSet Name="FK_Facturas_Comprobantes" Association="Self.FK_Facturas_Comprobantes">
       <End Role="Comprobantes" EntitySet="Comprobantes" />
       <End Role="Facturas" EntitySet="Facturas" />
@@ -280,5 +255,66 @@
       <End Role="DatosFiscales" EntitySet="DatosFiscales" />
       <End Role="Facturas" EntitySet="Facturas" />
     </AssociationSet>
+    <EntitySet Name="Pagos" EntityType="BuongustaioModel.Pagos" />
+    <EntitySet Name="Pedidos" EntityType="BuongustaioModel.Pedidos" />
+    <AssociationSet Name="FK_Comprobantes_Pedidos" Association="BuongustaioModel.FK_Comprobantes_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
+      <End Role="Comprobantes" EntitySet="Comprobantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Retroalimentacion_Pedidos" Association="BuongustaioModel.FK_Retroalimentacion_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
+      <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Pagos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="NumTarjeta" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Expiracion" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+    <Property Name="Propietario" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="Clave" Type="Decimal" Nullable="false" Precision="3" Scale="0" />
+    <Property Name="Cantidad" Type="Double" Nullable="false" />
+    <Property Name="Transaccion" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Cliente" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+    <Property Name="Pedido" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Comprobantes" Relationship="BuongustaioModel.FK_Comprobantes_Pedidos" FromRole="Pedidos" ToRole="Comprobantes" />
+    <NavigationProperty Name="Retroalimentacion" Relationship="BuongustaioModel.FK_Retroalimentacion_Pedidos" FromRole="Pedidos" ToRole="Retroalimentacion" />
+  </EntityType>
+  <Association Name="FK_Comprobantes_Pedidos">
+    <End Type="BuongustaioModel.Pedidos" Role="Pedidos" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BuongustaioModel.Comprobantes" Role="Comprobantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedidos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comprobantes">
+        <PropertyRef Name="Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Retroalimentacion_Pedidos">
+    <End Type="BuongustaioModel.Pedidos" Role="Pedidos" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BuongustaioModel.Retroalimentacion" Role="Retroalimentacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedidos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Retroalimentacion">
+        <PropertyRef Name="Orden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
