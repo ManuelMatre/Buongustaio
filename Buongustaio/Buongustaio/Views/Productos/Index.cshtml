@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    ViewBag.NumPlatillos = "<li style=\"float:right\"><a onclick=\"carritoEstatus()\" class=\"btn btn-default\" role =\"button\"><p id=\"orden\" style=\"float:right\"></p><span class=\"glyphicon glyphicon-shopping-cart\" style =\"color: red; \" aria-hidden=\"true\" ></span></a></li>";
     ViewBag.HeaderOption = "<li style=\"float:right\"><a onclick=\"enviarPedido('../Ordenes/Create')\" class=\"btn btn-default\" role =\"button\" >Terminar y Pagar</a></li>";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int counter = 0;
@@ -30,7 +31,8 @@
                                             <p>$@Model.ElementAt(counter).Precio</p>
                                             <div>
                                                 <div style="width: 70%; float:left">
-                                                    <input type="text" class="form-control" placeholder="Cantidad" aria-describedby="basic-addon2" id="@Model.ElementAt(counter).Id">
+                                                    <input type="number" class="form-control" placeholder=0 id="@Model.ElementAt(counter).Id" min="0" step="1" data-bind="value:replyNumber" />
+                                                    @*<input type="text" class="form-control" placeholder="Cantidad" aria-describedby="basic-addon2" id="@Model.ElementAt(counter).Id">*@
                                                 </div>
                                                 <div style="width: 30%; float:right">
                                                     <a onclick="agregarProducto(this)" class="btn btn-default" role="button" value="@Model.ElementAt(counter).Id">

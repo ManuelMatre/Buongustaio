@@ -12,21 +12,24 @@
 namespace Buongustaio.Models
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class Productos
+    using System.ComponentModel.DataAnnotations;
+    public partial class Facturas
 {
+        [Key]
+        [Required]
+        public string Folio { get; set; }
 
-    public string Id { get; set; }
+    public string Comprobante { get; set; }
 
-    public string Descripcion { get; set; }
+    public string RFC { get; set; }
 
-    public double Precio { get; set; }
 
-    public string Ingredientes { get; set; }
 
-    public string Imagen { get; set; }
+    public virtual Comprobantes Comprobantes { get; set; }
+
+    public virtual DatosFiscales DatosFiscales { get; set; }
 
 }
 
