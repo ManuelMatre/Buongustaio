@@ -15,6 +15,7 @@ namespace Buongustaio.Controllers
     [Authorize]
     public class CuentasController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -147,21 +148,28 @@ namespace Buongustaio.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model,Clientes cliente)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Telefono, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Telefono, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    cliente.Nombre = model.Nombre;
+                    cliente.Ap_paterno = model.ApellidoPaterno;
+                    cliente.Ap_mat = model.ApellidoMaterno;
+                    cliente.Telefono = Convert.ToInt64(model.Telefono);
+                    cliente.Domicilio = model.Domicilio;
+                    cliente.Contrasena = model.Password;
+                    db.Clientes.Add(cliente);
+                    await db.SaveChangesAsync();
 
                     return RedirectToAction("Index", "Home");
                 }

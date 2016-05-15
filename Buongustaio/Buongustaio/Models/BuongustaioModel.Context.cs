@@ -29,11 +29,11 @@ namespace Buongustaio.Models
         public virtual DbSet<Comprobantes> Comprobantes { get; set; }
         public virtual DbSet<DatosFiscales> DatosFiscales { get; set; }
         public virtual DbSet<Facturas> Facturas { get; set; }
-        public virtual DbSet<Ingredientes> Ingredientes { get; set; }
         public virtual DbSet<Miembros> Miembros { get; set; }
         public virtual DbSet<Ordenes> Ordenes { get; set; }
         public virtual DbSet<Productos> Productos { get; set; }
         public virtual DbSet<Promociones> Promociones { get; set; }
         public virtual DbSet<Retroalimentacion> Retroalimentacion { get; set; }
+        public virtual DbSet<Ingredientes> Ingredientes { get; set; }
     }
 }

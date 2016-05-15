@@ -40,6 +40,7 @@ namespace Buongustaio.Models
     public string Ap_mat { get; set; }
 
     public string Domicilio { get; set; }
+    
     [Key]
     [Required]
     public decimal Telefono { get; set; }

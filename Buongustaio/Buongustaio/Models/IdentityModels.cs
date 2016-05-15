@@ -31,7 +31,10 @@ namespace Buongustaio.Models
         }
 
         public System.Data.Entity.DbSet<Buongustaio.Models.Productos> Productos { get; set; }
+        public System.Data.Entity.DbSet<Buongustaio.Models.Clientes> Clientes { get; set; }
 
         public System.Data.Entity.DbSet<Buongustaio.Models.Ordenes> Ordenes { get; set; }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Comprobantes> Comprobantes { get; set; }
     }
 }

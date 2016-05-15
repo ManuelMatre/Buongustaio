@@ -6,116 +6,118 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Carta.css")
-    @Styles.Render("~/Content/navbar-fixed-side.css")
+    @Styles.Render("~/Content/simple-sidebar.css")
     @Scripts.Render("~/bundles/modernizr")
+
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Restaurant Buongustaio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+  
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                <li class="active">
+                    <a href="~/Home/Index"><span class="fa-stack fa-lg pull-left"></span> Inicio</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Cuentas", FormMethod.Post, new { id = "logoutForm", @class = "" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                                <li><a href="#">Membresias</a></li>
 
-        <div class="container body-content">
-
-                <div class="col-sm-3 col-md-2 affix-sidebar">
-                    <div class="sidebar-nav">
-                        <div class="navbar navbar-default" role="navigation">
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                                <span class="visible-xs navbar-brand">Sidebar menu</span>
-                            </div>
-                            <div class="navbar-collapse collapse sidebar-navbar-collapse">
-                                <ul class="nav navbar-nav" id="sidenav01">
-                                    <li class="" style="background-color: black;">
-                                        <a href="#" data-toggle="collapse" data-target="#toggleDemo0" data-parent="#sidenav01" class="collapsed">
-                                            <h4>
-                                                Control Panel
-                                                <br>
-                                                <small>IOSDSV <span class="caret"></span></small>
-                                            </h4>
-                                        </a>
-                                        <div class="collapse" id="toggleDemo0" style="height: 0px;">
-                                            <ul class="nav nav-list">
-                                                <li><a href="#">ProfileSubMenu1</a></li>
-                                                <li><a href="#">ProfileSubMenu2</a></li>
-                                                <li><a href="#">ProfileSubMenu3</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li style="background-color: black;">
-                                        <a href="#" data-toggle="collapse" data-target="#toggleDemo" data-parent="#sidenav01" class="collapsed">
-                                            <span class="glyphicon glyphicon-cloud"></span> Submenu 1 <span class="caret pull-right"></span>
-                                        </a>
-                                        <div class="collapse" id="toggleDemo" style="height: 0px;">
-                                            <ul class="nav nav-list">
-                                                <li><a href="#">Submenu1.1</a></li>
-                                                <li><a href="#">Submenu1.2</a></li>
-                                                <li><a href="#">Submenu1.3</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="" style="background-color: black;">
-                                        <a href="#" data-toggle="collapse" data-target="#toggleDemo2" data-parent="#sidenav01" class="collapsed">
-                                            <span class="glyphicon glyphicon-inbox"></span> Submenu 2 <span class="caret pull-right"></span>
-                                        </a>
-                                        <div class="collapse" id="toggleDemo2" style="height: 0px;">
-                                            <ul class="nav nav-list">
-                                                <li><a href="#">Submenu2.1</a></li>
-                                                <li><a href="#">Submenu2.2</a></li>
-                                                <li><a href="#">Submenu2.3</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li style="background-color: black;"><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
-                                    <li style="background-color: black;"><a href="#"><span class="glyphicon glyphicon-calendar"></span> WithBadges <span class="badge pull-right">42</span></a></li>
-                                    <li style="background-color: black;"><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>
-                                </ul>
-                            </div><!--/.nav-collapse -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-2 col-md-10 affix-content">
-                    <ul class="nav nav-pills" style="padding-bottom:-5px">
-                        @Html.Raw(ViewBag.HeaderOption)
-                        @Html.Raw(ViewBag.NumPlatillos)
+                            }
+                        }
+                        else
+                        {
+                            <li><a href="~/Cuentas/Login">Log In</a></li>
+                            <li><a href="~/Cuentas/Register">Regístrar</a></li>
+                            <li><a href="#">Membresias</a></li>
+                        }
                     </ul>
+                </li>
+                <li>
+                    <a href="" onclick="@*showMenu()*@"><span class="fa-stack fa-lg pull-left"></span>Menú de Platillos</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="~/Productos/Index"><span class="fa-stack fa-lg pull-left"></span>Entradas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Sopas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Pastas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Pizzas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Cremas</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Bebidas</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"></span>Pagos</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Paga tu Orden</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Membresias</a></li>
 
-                    <div id="modalShareBody" class="modal-body">
-                        <div id="panelGuest" class="panel">
-                            @RenderBody()
-                        </div>
-                    </div>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"></span>Facturas</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Alta de RFC</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Facturación</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"></span>Contacto</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
+                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"></span>Sigue tu Orden</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-12 col-md-12 affix-content">
+            <ul class="nav nav-pills" style="padding-bottom:-5px">
+                @Html.Raw(ViewBag.HeaderOption)
+                @Html.Raw(ViewBag.NumPlatillos)
+            </ul>
+
+            <div id="modalShareBody" class="modal-body">
+                <div id="panelGuest" class="panel">
+                    @RenderBody()
                 </div>
-               
-                <footer>
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-                </footer>
             </div>
+        </div>
+
+        <footer>
+            <div class="text-center">
+                <p>Todos los derechos reservados</p>
+            </div>
+        </footer>
+    </div>
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/Scripts/arbol-lista.js")
+        @Scripts.Render("~/Scripts/OwnScripts/SideMenu.js")
         @RenderSection("scripts", required: false)
 </body>
 </html>

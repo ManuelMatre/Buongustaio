@@ -49,18 +49,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Ingredientes">
-      <EntityTypeMapping TypeName="BuongustaioModel.Ingredientes">
-        <MappingFragment StoreEntitySet="Ingredientes">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Lote" ColumnName="Lote" />
-          <ScalarProperty Name="Ingrediente" ColumnName="Ingrediente" />
-          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-          <ScalarProperty Name="Fecha_Compra" ColumnName="Fecha_Compra" />
-          <ScalarProperty Name="Fecha_Expiracion" ColumnName="Fecha_Expiracion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Miembros">
       <EntityTypeMapping TypeName="BuongustaioModel.Miembros">
         <MappingFragment StoreEntitySet="Miembros">
@@ -111,6 +99,18 @@
           <ScalarProperty Name="Cliente" ColumnName="Cliente" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="Orden" ColumnName="Orden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ingredientes">
+      <EntityTypeMapping TypeName="BuongustaioModel.Ingredientes">
+        <MappingFragment StoreEntitySet="Ingredientes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Lote" ColumnName="Lote" />
+          <ScalarProperty Name="Ingrediente" ColumnName="Ingrediente" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Fecha_Compra" ColumnName="Fecha_Compra" />
+          <ScalarProperty Name="Fecha_Expiracion" ColumnName="Fecha_Expiracion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
