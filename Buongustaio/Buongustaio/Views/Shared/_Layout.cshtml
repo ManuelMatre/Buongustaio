@@ -36,7 +36,7 @@
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
                         @if (Request.IsAuthenticated)
                         {
-                            using (Html.BeginForm("LogOff", "Cuentas", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            using (Html.BeginForm("LogOff", "Cuentas", FormMethod.Post, new { id = "logoutForm", @class = "" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
