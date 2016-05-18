@@ -48,7 +48,6 @@ namespace Buongustaio.Controllers.EntitiesControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AllowAnonymous]
         public async Task<ActionResult> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes)
         {
             ordenes.Id = IdUnico.GetUniqueKey();
@@ -57,10 +56,11 @@ namespace Buongustaio.Controllers.EntitiesControllers
             {
                 db.Ordenes.Add(ordenes);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var result = new { url = "Successed", ordenId = ordenes.Id };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
 
-            return View(ordenes);
+            return View();
         }
 
         // GET: Ordenes/Edit/5
