@@ -2,15 +2,16 @@
 
 @{
     ViewBag.Title = "Index";
-    ViewBag.NumPlatillos = "<li style=\"float:right\"><a onclick=\"carritoEstatus()\" class=\"btn btn-default\" role =\"button\"><p id=\"orden\" style=\"float:right\"></p><span class=\"glyphicon glyphicon-shopping-cart\" style =\"color: red; \" aria-hidden=\"true\" ></span></a></li>";
+    ViewBag.NumPlatillos = "<li style=\"float:right\"><a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" role =\"button\"><p id=\"orden\" style=\"float:right\"></p><span class=\"glyphicon glyphicon-shopping-cart\" style =\"color: green; \" aria-hidden=\"true\" ></span></a></li>";
     ViewBag.HeaderOption = "<li style=\"float:right\"><a onclick=\"enviarPedido('../Ordenes/Create')\" class=\"btn btn-default\" role =\"button\" >Terminar y Pagar</a></li>";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int counter = 0;
 }
 
-<!--<p>
-    //Html.ActionLink("Create New", "Create")
-</p>-->
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
 <div class="wrap">
     <main>
@@ -53,4 +54,52 @@
     </main>
 </div>
 
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Mi Carrito</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-highlight">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%; text-align:center;">Cantidad</th>
+                                    <th style="width:65%; text-align:center;">Platillo</th>
+                                    <th style="width:15%; text-align:center;">Total</th>
+                                    <th style="width:10%; text-align:center;">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tb-carrito">
+                                <tr id="rw-item">
+                                    <td style="text-align:center;"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a onclick="" class="btn btn-default" role="button" value="">
+                                            <span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+
+<script type="text/javascript">
+    var id, ur, newUrl;
+    function getPago() {
+        url = '@Url.Action("Create","Pagos", new { id = "__id__" })';
+        newUrl = url.replace('__id__', id);
+    }
+</script>
 @Scripts.Render("~/Scripts/OwnScripts/Carrito.js")
