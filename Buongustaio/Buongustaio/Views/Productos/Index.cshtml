@@ -2,7 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
-    ViewBag.NumPlatillos = "<li style=\"float:right\"><a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" role =\"button\"><p id=\"orden\" style=\"float:right\"></p><span class=\"glyphicon glyphicon-shopping-cart\" style =\"color: green; \" aria-hidden=\"true\" ></span></a></li>";
+    ViewBag.NumPlatillos = "<li style=\"float:right\"><a data-toggle=\"modal\" href=\"#myModal\""+
+                           " class=\"btn btn-default\" role =\"button\"><p style=\"float:right\">"+
+                           "</p><span class=\"glyphicon glyphicon-shopping-cart\" style =\"color: green; \" aria-hidden=\"true\" >"+
+                           "</span><span id=\"orden\" class=\"badge\"></span></a></li>";
     ViewBag.HeaderOption = "<li style=\"float:right\"><a onclick=\"enviarPedido('../Ordenes/Create')\" class=\"btn btn-default\" role =\"button\" >Terminar y Pagar</a></li>";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int counter = 0;
@@ -29,14 +32,20 @@
                                         <img src="@Url.Content(Model.ElementAt(counter).Imagen)" style="height:120px" alt="...">
                                         <div class="caption">
                                             <h3>@Model.ElementAt(counter).Descripcion</h3>
-                                            <p>$@Model.ElementAt(counter).Precio</p>
+                                            <p>
+                                                @*$@Model.ElementAt(counter).Precio
+                                                @if (Model.ElementAt(counter).Descuento != null)
+                                                {
+                                                    Miembros: $@(Model.ElementAt(counter).Precio - (Model.ElementAt(counter).Precio *Model.ElementAt(counter).Descuento)
+                                                }*@
+                                            </p>
                                             <div>
                                                 <div style="width: 70%; float:left">
                                                     <input type="number" class="form-control" placeholder=0 id="@Model.ElementAt(counter).Id" min="0" step="1" data-bind="value:replyNumber" />
                                                     @*<input type="text" class="form-control" placeholder="Cantidad" aria-describedby="basic-addon2" id="@Model.ElementAt(counter).Id">*@
                                                 </div>
                                                 <div style="width: 30%; float:right">
-                                                    <a onclick="agregarProducto(this)" class="btn btn-default" role="button" value="@Model.ElementAt(counter).Id">
+                                                    <a onclick="agregarProducto(@Json.Encode(Model.ElementAt(counter)))" class="btn btn-default" role="button">
                                                         +<span class="glyphicon glyphicon-shopping-cart" style="color:blue;" aria-hidden="true"></span>
                                                     </a>
                                                 </div>
@@ -73,22 +82,23 @@
                                 </tr>
                             </thead>
                             <tbody id="tb-carrito">
-                                <tr id="rw-item">
+                                <tr id="rw-item" name="" style="display:none;">
                                     <td style="text-align:center;"></td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <a onclick="" class="btn btn-default" role="button" value="">
+                                        <a onclick="eliminarCarrito(this)" class="btn btn-default" role="button" value="">
                                             <span class="glyphicon glyphicon-remove" style="color:red;" aria-hidden="true"></span>
                                         </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <h3 id="total-pago" style="float:right; padding-right:3em"></h3>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

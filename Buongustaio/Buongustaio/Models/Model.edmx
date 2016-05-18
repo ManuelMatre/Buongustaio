@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BuongustaioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BuongustaioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="Telefono" />
@@ -89,6 +89,7 @@
           <Property Name="Clave" Type="numeric" Precision="3" Scale="0" Nullable="false" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
           <Property Name="Transaccion" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Pedido" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Pedidos">
           <Key>
@@ -98,6 +99,7 @@
           <Property Name="Cliente" Type="numeric" Precision="10" Scale="0" Nullable="false" />
           <Property Name="Pedido" Type="nchar" MaxLength="200" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="PagoTotal" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Productos">
           <Key>
@@ -209,6 +211,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pagos_Pedidos">
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="Pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Retroalimentacion_Cliente">
           <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
           <End Role="Retroalimentacion" Type="Self.Retroalimentacion" Multiplicity="*" />
@@ -272,6 +288,10 @@
             <End Role="DatosFiscales" EntitySet="DatosFiscales" />
             <End Role="Facturas" EntitySet="Facturas" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Pedidos" Association="Self.FK_Pagos_Pedidos">
+            <End Role="Pedidos" EntitySet="Pedidos" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
           <AssociationSet Name="FK_Retroalimentacion_Cliente" Association="Self.FK_Retroalimentacion_Cliente">
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
@@ -281,8 +301,7 @@
             <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BuongustaioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -382,6 +401,8 @@
           <Property Name="Clave" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
           <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="Transaccion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Pedido" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pedidos" Relationship="BuongustaioModel.FK_Pagos_Pedidos" FromRole="Pagos" ToRole="Pedidos" />
         </EntityType>
         <EntityType Name="Pedidos">
           <Key>
@@ -393,6 +414,8 @@
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Comprobantes_Pedidos" FromRole="Pedidos" ToRole="Comprobantes" />
           <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Pedidos" FromRole="Pedidos" ToRole="Retroalimentacion" />
+          <Property Name="PagoTotal" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Pagos" Relationship="BuongustaioModel.FK_Pagos_Pedidos" FromRole="Pedidos" ToRole="Pagos" />
         </EntityType>
         <EntityType Name="Productos">
           <Key>
@@ -577,7 +600,25 @@
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Pedidos" Association="BuongustaioModel.FK_Pagos_Pedidos">
+            <End Role="Pedidos" EntitySet="Pedidos" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Pagos_Pedidos">
+          <End Type="BuongustaioModel.Pedidos" Role="Pedidos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BuongustaioModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="Pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -667,6 +708,7 @@
           <EntitySetMapping Name="Pagos">
             <EntityTypeMapping TypeName="BuongustaioModel.Pagos">
               <MappingFragment StoreEntitySet="Pagos">
+                <ScalarProperty Name="Pedido" ColumnName="Pedido" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NumTarjeta" ColumnName="NumTarjeta" />
                 <ScalarProperty Name="Expiracion" ColumnName="Expiracion" />
@@ -680,6 +722,7 @@
           <EntitySetMapping Name="Pedidos">
             <EntityTypeMapping TypeName="BuongustaioModel.Pedidos">
               <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="PagoTotal" ColumnName="PagoTotal" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Cliente" ColumnName="Cliente" />
                 <ScalarProperty Name="Pedido" ColumnName="Pedido" />

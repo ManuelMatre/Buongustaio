@@ -19,6 +19,7 @@ namespace Buongustaio.Models
         {
             this.Facturas = new HashSet<Facturas>();
         }
+
         [Key]
         [Required]
         public string Folio { get; set; }

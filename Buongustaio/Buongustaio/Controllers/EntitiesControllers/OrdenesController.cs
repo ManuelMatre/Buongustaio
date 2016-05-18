@@ -59,8 +59,8 @@ namespace Buongustaio.Controllers.EntitiesControllers
                 var result = new { url = "Successed", ordenId = ordenes.Id };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-
-            return View();
+            var error = new { url = "Error", ordenId = "Datos Inválidos" };
+            return Json(error, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Ordenes/Edit/5

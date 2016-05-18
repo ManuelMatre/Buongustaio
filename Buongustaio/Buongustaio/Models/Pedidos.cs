@@ -19,16 +19,20 @@ namespace Buongustaio.Models
         {
             this.Comprobantes = new HashSet<Comprobantes>();
             this.Retroalimentacion = new HashSet<Retroalimentacion>();
+            this.Pagos = new HashSet<Pagos>();
         }
     
         public string Id { get; set; }
         public decimal Cliente { get; set; }
         public string Pedido { get; set; }
         public System.DateTime Fecha { get; set; }
+        public double PagoTotal { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comprobantes> Comprobantes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Retroalimentacion> Retroalimentacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pagos> Pagos { get; set; }
     }
 }
