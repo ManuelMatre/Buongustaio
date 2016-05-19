@@ -32,13 +32,15 @@
                                         <img src="@Url.Content(Model.ElementAt(counter).Imagen)" style="height:120px" alt="...">
                                         <div class="caption">
                                             <h3>@Model.ElementAt(counter).Descripcion</h3>
-                                            <p>
-                                                @*$@Model.ElementAt(counter).Precio
-                                                @if (Model.ElementAt(counter).Descuento != null)
-                                                {
-                                                    Miembros: $@(Model.ElementAt(counter).Precio - (Model.ElementAt(counter).Precio *Model.ElementAt(counter).Descuento)
-                                                }*@
-                                            </p>
+                                            <div>
+                                                <p>$@Model.ElementAt(counter).Precio</p>
+                                                    @if (Model.ElementAt(counter).Descuento != null)
+                                                    {
+                                                        <p style="float:left">
+                                                            Miembros: @((@Model.ElementAt(counter).Precio) - (@Model.ElementAt(counter).Descuento * @Model.ElementAt(counter).Precio))
+                                                        </p>
+                                                    }
+                                            </div>
                                             <div>
                                                 <div style="width: 70%; float:left">
                                                     <input type="number" class="form-control" placeholder=0 id="@Model.ElementAt(counter).Id" min="0" step="1" data-bind="value:replyNumber" />

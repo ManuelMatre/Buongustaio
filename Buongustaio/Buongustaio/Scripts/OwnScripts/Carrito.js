@@ -7,7 +7,7 @@ var totalPago = 0;
 function agregarProducto(producto) {
     var item = new Object();
     item.cantidad = document.getElementById(producto.Id).value;
-    if (item.cantidad != ""&& item.cantidad != 0)
+    if (item.cantidad != ""&& item.cantidad != 0){
         totalPago += (producto.Precio * item.cantidad);
         item.platillo = producto;
         carrito[Object.keys(carrito).length] = item;
