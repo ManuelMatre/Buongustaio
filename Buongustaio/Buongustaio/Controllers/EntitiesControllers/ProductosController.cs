@@ -48,7 +48,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Descripcion,Precio,Ingredientes,Imagen")] Productos productos)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Descripcion,Precio,Ingredientes,Imagen,Descuento")] Productos productos)
         {
             productos.Id = IdUnico.GetUniqueKey();
             if (ModelState.IsValid)

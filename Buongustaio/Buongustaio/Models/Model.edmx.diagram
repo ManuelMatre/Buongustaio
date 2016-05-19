@@ -25,6 +25,7 @@
         <AssociationConnector Association="BuongustaioModel.FK_Facturas_Comprobantes" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Facturas_DatosFiscales" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Retroalimentacion_Pedidos" ManuallyRouted="false" />
+        <AssociationConnector Association="BuongustaioModel.FK_Pagos_Pedidos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

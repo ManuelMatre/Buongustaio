@@ -36,5 +36,9 @@ namespace Buongustaio.Models
         public System.Data.Entity.DbSet<Buongustaio.Models.Ordenes> Ordenes { get; set; }
 
         public System.Data.Entity.DbSet<Buongustaio.Models.Comprobantes> Comprobantes { get; set; }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Pagos> Pagos { get; set; }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Pedidos> Pedidos { get; set; }
     }
 }

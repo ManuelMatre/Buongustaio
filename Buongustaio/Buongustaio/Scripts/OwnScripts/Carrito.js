@@ -1,57 +1,84 @@
-﻿var carrito = [];
-var totalOrden = 0;
-var totalCarrito = document.getElementById("orden");
+﻿var totalCarritoHtml = document.getElementById("orden");
+var totalHtml = document.getElementById('total-pago');
+var carrito = new Object;
+var totalPlatillos = 0;
+var totalPago = 0;
 
 function agregarProducto(producto) {
-    var id = producto.attributes["value"].value;
     var item = new Object();
-    item.id = id;
-    item.cantidad = document.getElementById(id).value;
-    if (item.cantidad != "") {
-        carrito[carrito.length] = item;
+    item.cantidad = document.getElementById(producto.Id).value;
+    if (item.cantidad != ""&& item.cantidad != 0)
+        totalPago += (producto.Precio * item.cantidad);
+        item.platillo = producto;
+        carrito[Object.keys(carrito).length] = item;
         numPlatillos(item.cantidad);
+        addModal(item);
     }
+    totalHtml.innerHTML = 'Total: $' + totalPago;
 }
 
 function enviarPedido(actionLink) {
-    if (carrito.length != 0) {
+    var token = $('[name=__RequestVerificationToken]').val();
+    var hayContenido = false;
+    for (var i = 0; i < Object.keys(carrito).length; i++) {
+        if (carrito[i] != null) {
+            hayContenido = true;
+            break;
+        }
+    }
+    if (hayContenido){
         $.post(actionLink, {
+            __RequestVerificationToken: token,
             Id: '1',
             Cliente: '6622782870',
             Pedido: JSON.stringify(carrito),
             Fecha: '02-02-2016'
         })
-        .done(function () {
-            alert("Orden Registrada", "", "success");
+        .done(function (response) {
+            if (response['url'] != 'Error') {
+                id = response['ordenId'];
+                getPago(); // fucion ubicada en la vista
+                window.location.href = newUrl;
+            } else {
+                alert(response['ordenId']);
+            }
         })
         .fail(function () {
-            alert("Error", "", "success");
+            alert("Error", "", "");
         });
-        var url = '@Url.Action("SomeAction", "SomeController")';
-        // do something with the url client side variable, for example redirect
-        window.location.href = url;
     } else {
         alert("Seleccione primero los platillos que desee ordenar.")
     }
 }
 
 function numPlatillos(cantidad) {
-    totalOrden += parseInt(cantidad);
-    totalCarrito.innerHTML = totalOrden;
+    totalPlatillos += parseInt(cantidad);
+    totalCarritoHtml.innerHTML = totalPlatillos;
 }
 
-function carritoEstatus() {
-    if (carrito.length != 0) {
-        var str = "";
-        for (var i = 0; i < carrito.length; i++) {
-            str += (i + 1) + " " + carrito[i]["cantidad"] + " " + carrito[i]["id"] + "\n";
-        }
-        var eliminar = prompt(str + "Eliminar registro número:");
-        if (eliminar != "" && eliminar <= carrito.length) {
-            numPlatillos(-carrito[eliminar - 1]["cantidad"]);
-            carrito[eliminar - 1] = carrito[carrito.length - 1];
-            carrito.length = carrito.length - 1;
-        }
-    }
+function addModal(myItem) {
+    var row = document.getElementById("rw-item");
+    var table = document.getElementById('tb-carrito');
+    var clone = row.cloneNode(true);
+    clone.style.display = 'table-row';
+    clone.attributes['id'].value = "" + Object.keys(carrito).length - 1;
+        clone.children[0].textContent = myItem.cantidad;
+        clone.children[1].textContent = myItem.platillo.Descripcion;
+        clone.children[2].textContent = '$' + (myItem.cantidad * myItem.platillo.Precio);
+        //one.children[3].children[0].value = Object.keys(carrito).length - 1;
+        //table.appendChild(clone);
+        table.insertAdjacentElement('afterBegin', clone);
 }
 
+function eliminarCarrito(data) {
+    var rowNum = data.parentNode.parentNode.attributes['id'].value;
+    var row = document.getElementById(rowNum);
+    numPlatillos(-(carrito[rowNum].cantidad));
+    //totalPlatillos -= carrito[rowNum].cantidad;
+    totalPago -= (carrito[rowNum].cantidad * carrito[rowNum].platillo.Precio);
+    if (totalPago < 0) totalPago = 0;
+    carrito[rowNum] = null;
+    var table = document.getElementById('tb-carrito');
+    table.removeChild(row);
+    totalHtml.innerHTML = 'Total: $' + totalPago.toFixed(2);
+}
