@@ -1,0 +1,135 @@
+﻿@model Buongustaio.Models.Facturas
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Facturas</h4>
+    <hr />
+    <div id="PDF">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DatosFiscales.Razon_social)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DatosFiscales.Razon_social)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DatosFiscales.RFC)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DatosFiscales.RFC)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DatosFiscales.Domicilio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DatosFiscales.Domicilio)
+            </dd>
+
+            <div class="modal-body" style="width: 700px">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-highlight">
+                        <thead>
+                            <tr>
+                                <th style="width:10%; text-align:center;">Cantidad</th>
+                                <th style="width:65%; text-align:center;">Producto</th>
+                                <th style="width:15%; text-align:center;">Precio Unitario</th>
+                                <th style="width:10%; text-align:center;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb-carrito">
+                            @foreach (var item in ViewBag.Comprobante)
+                            {
+                                var cantidad = int.Parse(item.Value["cantidad"].ToString());
+                                var precio = float.Parse(item.Value["platillo"]["Precio"].ToString());
+                                var total = cantidad * precio;
+                                <tr id="rw-item" name="">
+                                    <td>@cantidad</td>
+                                    <td>@item.Value["platillo"]["Descripcion"].ToString()</td>
+                                    <td>@precio</td>
+                                    <td>@total</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <h3 id="total-pago" style="float:right; padding-right:3em"></h3>
+                </div>
+            </div>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Folio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Folio)
+            </dd>
+
+        </dl>
+    </divid="PDF">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="generar" value="generar" class="btn btn-default" />
+        </div>
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Folio }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery-2.2.3.js")
+    <script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        
+        (function () {
+            var
+             form = $('#PDF'),
+             cache_width = form.width(),
+             a4 = [900, 841.89];  // for a4 size paper width and height
+
+            $('#generar').on('click', function () {
+                $('#PDF').scrollTop(0);
+                createPDF();
+            });
+            //create pdf
+            function createPDF() {
+                getCanvas().then(function (canvas) {
+                    var
+                    img = canvas.toDataURL("image/png"),
+                    doc = new jsPDF({
+                        unit: 'px',
+                        format: 'a4'
+                    });
+                    var fecha = new Date();
+                    doc.addImage(img, 'JPEG', -100, 20);
+                    doc.save('Factura.pdf');
+                    form.width(cache_width);
+                });
+            }
+
+            // create canvas object
+            function getCanvas() {
+                form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+                return html2canvas(form, {
+                    imageTimeout: 2000,
+                    removeContainer: true
+                });
+            }
+
+        }());
+    </script>
+}

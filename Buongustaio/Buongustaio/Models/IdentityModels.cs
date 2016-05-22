@@ -40,5 +40,9 @@ namespace Buongustaio.Models
         public System.Data.Entity.DbSet<Buongustaio.Models.Pagos> Pagos { get; set; }
 
         public System.Data.Entity.DbSet<Buongustaio.Models.Pedidos> Pedidos { get; set; }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.DatosFiscales> DatosFiscales { get; set; }
+
+        public System.Data.Entity.DbSet<Buongustaio.Models.Facturas> Facturas { get; set; }
     }
 }

@@ -14,6 +14,12 @@ namespace Buongustaio.Models
     
     public partial class Pagos
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pagos()
+        {
+            this.Comprobantes = new HashSet<Comprobantes>();
+        }
+    
         public string Id { get; set; }
         public string NumTarjeta { get; set; }
         public string Expiracion { get; set; }
@@ -23,6 +29,8 @@ namespace Buongustaio.Models
         public string Transaccion { get; set; }
         public string Pedido { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comprobantes> Comprobantes { get; set; }
         public virtual Pedidos Pedidos { get; set; }
     }
 }

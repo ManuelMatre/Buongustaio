@@ -9,116 +9,123 @@ using System.Web;
 using System.Web.Mvc;
 using Buongustaio.Models;
 using Buongustaio.Classes;
+using Newtonsoft.Json.Linq;
 
 namespace Buongustaio.Controllers.EntitiesControllers
 {
-    public class PedidosController : Controller
+    public class FacturasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Pedidos
+        // GET: Facturas
         public async Task<ActionResult> Index()
         {
-            return View(await db.Pedidos.ToListAsync());
+            var facturas = db.Facturas.Include(f => f.DatosFiscales);
+            return View(await facturas.ToListAsync());
         }
 
-        // GET: Pedidos/Details/5
+        // GET: Facturas/Details/5
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            if (pedidos == null)
+            Facturas facturas = await db.Facturas.FindAsync(id);
+            if (facturas == null)
             {
                 return HttpNotFound();
             }
-            return View(pedidos);
+            Comprobantes miComprobante = db.Comprobantes.Find(facturas.Comprobante_Folio);
+            Pagos miPago = db.Pagos.Find(miComprobante.Pago_Id);
+            Pedidos miPedido = db.Pedidos.Find(miPago.Pedido);
+
+            ViewBag.Comprobante = JObject.Parse(miPedido.Pedido);
+            return View(facturas);
         }
 
-        // GET: Pedidos/Create
+        // GET: Facturas/Create
         public ActionResult Create()
         {
+            //ViewBag.RFC = new SelectList(db.DatosFiscales, "RFC", "RFC");
             return View();
         }
 
-        // POST: Pedidos/Create
+        // POST: Facturas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes, Pagos pagos)
+        public async Task<ActionResult> Create([Bind(Include = "Folio,Comprobante_Folio,RFC")] Facturas facturas)
         {
-            Pedidos pedidos = new Pedidos();
-            pedidos.Id = pagos.Pedido;
-            pedidos.Fecha = DateTime.Now;
-            pedidos.Cliente = ordenes.Cliente;
-            pedidos.Pedido = ordenes.Pedido;
-            pedidos.PagoTotal = pagos.Cantidad;
+            facturas.Folio = IdUnico.GetUniqueKey();
             if (ModelState.IsValid)
             {
-                db.Pedidos.Add(pedidos);
+                db.Facturas.Add(facturas);
                 await db.SaveChangesAsync();
-                return RedirectToAction("../Home");
+                return RedirectToAction("Details/"+facturas.Folio);
+                //await Details(facturas.Folio);
             }
 
-            return View(pedidos);
+            //ViewBag.RFC = new SelectList(db.DatosFiscales, "RFC", "Razon_social", facturas.RFC);
+            return View(facturas);
         }
 
-        // GET: Pedidos/Edit/5
+        // GET: Facturas/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            if (pedidos == null)
+            Facturas facturas = await db.Facturas.FindAsync(id);
+            if (facturas == null)
             {
                 return HttpNotFound();
             }
-            return View(pedidos);
+            ViewBag.RFC = new SelectList(db.DatosFiscales, "RFC", "Razon_social", facturas.RFC);
+            return View(facturas);
         }
 
-        // POST: Pedidos/Edit/5
+        // POST: Facturas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Cliente,Pedido,Fecha")] Pedidos pedidos)
+        public async Task<ActionResult> Edit([Bind(Include = "Folio,Comprobante_Id,RFC")] Facturas facturas)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pedidos).State = EntityState.Modified;
+                db.Entry(facturas).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(pedidos);
+            ViewBag.RFC = new SelectList(db.DatosFiscales, "RFC", "Razon_social", facturas.RFC);
+            return View(facturas);
         }
 
-        // GET: Pedidos/Delete/5
+        // GET: Facturas/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            if (pedidos == null)
+            Facturas facturas = await db.Facturas.FindAsync(id);
+            if (facturas == null)
             {
                 return HttpNotFound();
             }
-            return View(pedidos);
+            return View(facturas);
         }
 
-        // POST: Pedidos/Delete/5
+        // POST: Facturas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            db.Pedidos.Remove(pedidos);
+            Facturas facturas = await db.Facturas.FindAsync(id);
+            db.Facturas.Remove(facturas);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

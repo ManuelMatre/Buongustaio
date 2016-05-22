@@ -8,117 +8,119 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Buongustaio.Models;
-using Buongustaio.Classes;
 
 namespace Buongustaio.Controllers.EntitiesControllers
 {
-    public class PedidosController : Controller
+    public class DatosFiscalesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Pedidos
+        // GET: DatosFiscales
         public async Task<ActionResult> Index()
         {
-            return View(await db.Pedidos.ToListAsync());
+            return View(await db.DatosFiscales.ToListAsync());
         }
 
-        // GET: Pedidos/Details/5
+        // GET: DatosFiscales/Details/5
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            if (pedidos == null)
+            DatosFiscales datosFiscales = await db.DatosFiscales.FindAsync(id);
+            if (datosFiscales == null)
             {
                 return HttpNotFound();
             }
-            return View(pedidos);
+            return View(datosFiscales);
         }
 
-        // GET: Pedidos/Create
+        // GET: DatosFiscales/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Pedidos/Create
+        // POST: DatosFiscales/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes, Pagos pagos)
+        public async Task<ActionResult> Create([Bind(Include = "RFC,Razon_social,Domicilio,Telefono,Correo")] DatosFiscales datosFiscales)
         {
-            Pedidos pedidos = new Pedidos();
-            pedidos.Id = pagos.Pedido;
-            pedidos.Fecha = DateTime.Now;
-            pedidos.Cliente = ordenes.Cliente;
-            pedidos.Pedido = ordenes.Pedido;
-            pedidos.PagoTotal = pagos.Cantidad;
             if (ModelState.IsValid)
             {
-                db.Pedidos.Add(pedidos);
-                await db.SaveChangesAsync();
-                return RedirectToAction("../Home");
+                try
+                {
+                    db.DatosFiscales.Add(datosFiscales);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }catch(System.Data.Entity.Infrastructure.DbUpdateException ex)
+                {
+                    //throw new HttpException(404, "La clave RFC ya está registrada.");
+                    ViewBag.ErrorMessage = "La clave RFC ya está registrada.";
+                    return View(datosFiscales);
+                }
+                
             }
 
-            return View(pedidos);
+            return View(datosFiscales);
         }
 
-        // GET: Pedidos/Edit/5
+        // GET: DatosFiscales/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            if (pedidos == null)
+            DatosFiscales datosFiscales = await db.DatosFiscales.FindAsync(id);
+            if (datosFiscales == null)
             {
                 return HttpNotFound();
             }
-            return View(pedidos);
+            return View(datosFiscales);
         }
 
-        // POST: Pedidos/Edit/5
+        // POST: DatosFiscales/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Cliente,Pedido,Fecha")] Pedidos pedidos)
+        public async Task<ActionResult> Edit([Bind(Include = "RFC,Razon_social,Domicilio,Telefono,Correo")] DatosFiscales datosFiscales)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pedidos).State = EntityState.Modified;
+                db.Entry(datosFiscales).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(pedidos);
+            return View(datosFiscales);
         }
 
-        // GET: Pedidos/Delete/5
+        // GET: DatosFiscales/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            if (pedidos == null)
+            DatosFiscales datosFiscales = await db.DatosFiscales.FindAsync(id);
+            if (datosFiscales == null)
             {
                 return HttpNotFound();
             }
-            return View(pedidos);
+            return View(datosFiscales);
         }
 
-        // POST: Pedidos/Delete/5
+        // POST: DatosFiscales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Pedidos pedidos = await db.Pedidos.FindAsync(id);
-            db.Pedidos.Remove(pedidos);
+            DatosFiscales datosFiscales = await db.DatosFiscales.FindAsync(id);
+            db.DatosFiscales.Remove(datosFiscales);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

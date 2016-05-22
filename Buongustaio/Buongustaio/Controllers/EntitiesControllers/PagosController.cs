@@ -76,7 +76,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
                 if(true/*Agregar método para conexion con banco*/)
                 {
                     PedidosController nvoPedido = new PedidosController();
-                    var url = await nvoPedido.Create(orden, (float)pagos.Cantidad);
+                    var url = await nvoPedido.Create(orden, pagos);
                     db.Pagos.Add(pagos);
                     await db.SaveChangesAsync();
                     return url;
