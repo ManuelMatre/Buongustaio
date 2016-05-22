@@ -1,0 +1,66 @@
+﻿@model Buongustaio.Models.Retroalimentacion
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Retroalimentacion</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Estado_orden)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Estado_orden)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Nivel_satisfaccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nivel_satisfaccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Cliente)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Fecha)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Orden)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Orden)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

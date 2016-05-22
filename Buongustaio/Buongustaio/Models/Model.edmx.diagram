@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="112a46ce91074cdf90047213bd85daf9" Name="Diagram1">
+      <Diagram DiagramId="8a461c5580bd4f7199b61e5c3ff77227" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="BuongustaioModel.Clientes" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Comprobantes" Width="1.5" PointX="7.5" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.DatosFiscales" Width="1.5" PointX="7.5" PointY="3.25" IsExpanded="true" />
@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="BuongustaioModel.Pedidos" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Productos" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BuongustaioModel.Retroalimentacion" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
-        <AssociationConnector Association="BuongustaioModel.FK__Miembros__client__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="BuongustaioModel.FK__Miembros__client__267ABA7A" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK__Ordenes__Cliente__267ABA7A" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Pedidos_Clientes" ManuallyRouted="false" />
         <AssociationConnector Association="BuongustaioModel.FK_Comprobantes_Pagos" ManuallyRouted="false" />

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Buongustaio.Models.Comprobantes>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Comprobante</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <div class="text-center">
+        
+        <div class="" id="PDF">
+            
+            <h1>Comprobante De Compra</h1>
+            <br />
+            <pre>
+    Buongustaio S.A de C.V.                           RFC:csfsvssvc87
+    Dirección Restaurante                                            
+    Hermosillo Sonora                                                
+    <label>@DateTime.Now</label>                                        
+                                             
+    Num. de Orden:;D                                                
+    </pre>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Cant</td>
+                        <td>Producto</td>
+                        <td>Precio Unitario</td>
+                        <td>Descuento</td>
+                        <td>Total</td>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body">
+                    <tr>
+                        <td>@ViewBag.detalles</td>
+                        <td><input type="text" /></td>
+                        <td><input type="text" /></td>
+                        <td><input type="text" /></td>
+                        <td><input type="text" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="generar" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+
+</body>
+</html>

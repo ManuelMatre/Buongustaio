@@ -105,11 +105,11 @@
                         var img = canvas.toDataURL("image/png");
                         var doc = new jsPDF();
                         doc.addImage(img, 'JPEG', -50, 20);
-                        doc.save('Factura.pdf');
+                    doc.save('Factura.pdf');
                     }
                 });
                 tabla.width(cache_width);
-            });
+                });
         }());
     </script>
 }
