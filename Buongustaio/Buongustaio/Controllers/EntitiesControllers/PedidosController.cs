@@ -48,7 +48,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes, Pagos pagos)
+        public async Task<Pedidos> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes, Pagos pagos)
         {
             Pedidos pedidos = new Pedidos();
             pedidos.Id = pagos.Pedido;
@@ -60,10 +60,10 @@ namespace Buongustaio.Controllers.EntitiesControllers
             {
                 db.Pedidos.Add(pedidos);
                 await db.SaveChangesAsync();
-                return RedirectToAction("../Home");
+                return pedidos;//RedirectToAction("../Comprobantes/Index");
             }
 
-            return View(pedidos);
+            return null;//false;//View(pedidos);
         }
 
         // GET: Pedidos/Edit/5

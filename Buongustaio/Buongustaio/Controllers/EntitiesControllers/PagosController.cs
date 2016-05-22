@@ -68,18 +68,36 @@ namespace Buongustaio.Controllers.EntitiesControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,NumTarjeta,Expiracion,Propietario,Clave,Cantidad,Transaccion,Pedido")] Pagos pagos)
         {
+             
             pagos.Id = IdUnico.GetUniqueKey();
             pagos.Transaccion = IdUnico.GetUniqueKey();
             var orden = (Ordenes)db.Ordenes.Where(x => x.Id == pagos.Pedido).FirstOrDefault();
+            //comprobante
+            var cantidad = pagos.Cantidad;
+
+           
+            
+
             if (ModelState.IsValid)
             {
                 if(true/*Agregar método para conexion con banco*/)
                 {
                     PedidosController nvoPedido = new PedidosController();
-                    var url = await nvoPedido.Create(orden, pagos);
+                    Pedidos pedido = await nvoPedido.Create(orden, pagos);
                     db.Pagos.Add(pagos);
+
                     await db.SaveChangesAsync();
-                    return url;
+                    Comprobantes comprobante = new Comprobantes();
+                    comprobante.Folio = IdUnico.GetUniqueKey();
+                    comprobante.Fechayhora = DateTime.Now;
+                    comprobante.Pago_Id = pagos.Id;
+                    comprobante.Subtotal = pagos.Cantidad;
+                    comprobante.Total = cantidad * 1.16;
+                    db.Comprobantes.Add(comprobante);
+                    await db.SaveChangesAsync();
+                    ComprobantesController comprobanteController = new ComprobantesController();
+                    comprobanteController.Details(comprobante.Folio);
+                    return RedirectToAction("../Comprobantes/Details/" + comprobante.Folio);
                 }
             }
 
