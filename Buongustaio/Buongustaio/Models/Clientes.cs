@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Buongustaio.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Clientes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,7 +29,6 @@ namespace Buongustaio.Models
         public string Ap_paterno { get; set; }
         public string Ap_mat { get; set; }
         public string Domicilio { get; set; }
-
         [Key]
         [Required]
         public decimal Telefono { get; set; }
