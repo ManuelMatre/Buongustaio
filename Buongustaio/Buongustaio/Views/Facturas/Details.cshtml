@@ -115,7 +115,7 @@
                         format: 'a4'
                     });
                     var fecha = new Date();
-                    doc.addImage(img, 'JPEG', -100, 20);
+                    doc.addImage(img, 'JPEG', 20, 20);
                     doc.save('Factura.pdf');
                     form.width(cache_width);
                 });
