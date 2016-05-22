@@ -1,0 +1,72 @@
+﻿@model Buongustaio.Models.Retroalimentacion
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Retroalimentacion</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Estado_orden)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Estado_orden)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Nivel_satisfaccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nivel_satisfaccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Cliente)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Fecha)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Orden)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Orden)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

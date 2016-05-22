@@ -1,0 +1,85 @@
+﻿@model Buongustaio.Models.Comprobantes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <div id="PDF">
+            <div class="text-center">
+                <h1>Comprobante De Compra</h1>
+                <br />
+                <pre>
+            Buongustaio S.A de C.V.                           RFC:csfsvssvc87
+            Dirección Restaurante                                            
+            Hermosillo Sonora                                                
+            <label>@DateTime.Now</label>                                         
+            <label>Folio:</label>@Html.DisplayFor(mode=> mode.Folio)                                                  
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Cant</td>
+                        <td>Producto</td>
+                        <td>Precio Unitario</td>
+                        <td>Descuento</td>
+                        <td>Total</td>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body">
+                @foreach (var item in ViewBag.pedido)
+                {
+                    var cantidad = float.Parse(item.Value["cantidad"].ToString());
+                    var precio =float.Parse(item.Value["platillo"]["Precio"].ToString());
+                    var descuento = float.Parse(item.Value["platillo"]["Descuento"].ToString());
+                    var total = cantidad * precio;
+                    <tr>
+                        <td>@cantidad</td>
+                        <td>@item.Value["platillo"]["Descripcion"].ToString()</td>
+                        <td>@precio</td>
+                        <td>@descuento</td>
+                        <td>@total</td>
+                    </tr>
+                }
+                </tbody>
+            </table>                                              
+            </pre>
+            </div>
+        </div>
+        
+       
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" onclick="genPDF()" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/Scripts/jquery-2.2.3.js")
+        <script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script>
+        <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+        <script type="text/javascript">
+
+        function genPDF() {
+            html2canvas(document.getElementById('PDF'), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL("image/png");
+                    var doc = new jsPDF();
+                    doc.addImage(img, 'JPEG', -20, 0);
+                    doc.save('Factura.pdf');
+                }
+            });
+        }
+        </script>
+    }
+</body>
+</html>
