@@ -12,110 +12,113 @@ using Buongustaio.Classes;
 
 namespace Buongustaio.Controllers.EntitiesControllers
 {
-    public class OrdenesController : Controller
+    public class PedidosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Ordenes
+        // GET: Pedidos
         public async Task<ActionResult> Index()
         {
-            return View(await db.Ordenes.ToListAsync());
+            return View(await db.Pedidos.ToListAsync());
         }
 
-        // GET: Ordenes/Details/5
+        // GET: Pedidos/Details/5
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ordenes ordenes = await db.Ordenes.FindAsync(id);
-            if (ordenes == null)
+            Pedidos pedidos = await db.Pedidos.FindAsync(id);
+            if (pedidos == null)
             {
                 return HttpNotFound();
             }
-            return View(ordenes);
+            return View(pedidos);
         }
 
-        // GET: Ordenes/Create
+        // GET: Pedidos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Ordenes/Create
+        // POST: Pedidos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes)
+        public async Task<Pedidos> Create([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes, Pagos pagos)
         {
-            ordenes.Id = IdUnico.GetUniqueKey();
-            ordenes.Fecha = DateTime.Now;
+            Pedidos pedidos = new Pedidos();
+            pedidos.Id = pagos.Pedido;
+            pedidos.Fecha = DateTime.Now;
+            pedidos.Cliente = ordenes.Cliente;
+            pedidos.Pedido = ordenes.Pedido;
+            pedidos.PagoTotal = pagos.Cantidad;
             if (ModelState.IsValid)
             {
-                db.Ordenes.Add(ordenes);
+                db.Pedidos.Add(pedidos);
                 await db.SaveChangesAsync();
-                var result = new { url = "Successed", ordenId = ordenes.Id };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return pedidos;//RedirectToAction("../Comprobantes/Index");
             }
-            var error = new { url = "Error", ordenId = "Datos Inválidos" };
-            return Json(error, JsonRequestBehavior.AllowGet);
+
+            return null;//false;//View(pedidos);
         }
 
-        // GET: Ordenes/Edit/5
+        // GET: Pedidos/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ordenes ordenes = await db.Ordenes.FindAsync(id);
-            if (ordenes == null)
+            Pedidos pedidos = await db.Pedidos.FindAsync(id);
+            if (pedidos == null)
             {
                 return HttpNotFound();
             }
-            return View(ordenes);
+            return View(pedidos);
         }
 
-        // POST: Ordenes/Edit/5
+        // POST: Pedidos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Cliente,Pedido,Fecha")] Ordenes ordenes)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Cliente,Pedido,Fecha")] Pedidos pedidos)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ordenes).State = EntityState.Modified;
+                db.Entry(pedidos).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(ordenes);
+            return View(pedidos);
         }
 
-        // GET: Ordenes/Delete/5
+        // GET: Pedidos/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ordenes ordenes = await db.Ordenes.FindAsync(id);
-            if (ordenes == null)
+            Pedidos pedidos = await db.Pedidos.FindAsync(id);
+            if (pedidos == null)
             {
                 return HttpNotFound();
             }
-            return View(ordenes);
+            return View(pedidos);
         }
 
-        // POST: Ordenes/Delete/5
+        // POST: Pedidos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Ordenes ordenes = await db.Ordenes.FindAsync(id);
-            db.Ordenes.Remove(ordenes);
+            Pedidos pedidos = await db.Pedidos.FindAsync(id);
+            db.Pedidos.Remove(pedidos);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

@@ -9,3 +9,20 @@
 <img src="~/Images/Lasagna.jpg" alt="Alternate Text" />
 
 <img src="~/Images/Brocheta.jpg" width="550px" height="250px" class="pull-right" alt="Alternate Text" />
+<br />
+<br />
+
+<div class="text-center">
+    @if (Request.IsAuthenticated)
+    {
+        <a href="~/Productos/Index">Seleccionar Platillo</a>
+    }
+    else
+    {
+        <a href="~/Cuentas/Register">Si no te has registrado has click aqui</a>
+        <br />
+        <br />
+        <a href="~/Cuentas/Login">Da click en Log In y llénate de sabor</a>
+    }
+    
+</div>

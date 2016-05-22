@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Buongustaio.Models;
+using Buongustaio.Classes;
+using Newtonsoft.Json.Linq;
 
 namespace Buongustaio.Controllers.EntitiesControllers
 {
@@ -17,17 +19,23 @@ namespace Buongustaio.Controllers.EntitiesControllers
         // GET: Comprobantes
         public ActionResult Index()
         {
+           
             return View(db.Comprobantes.ToList());
         }
 
         // GET: Comprobantes/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(String Id)
         {
-            if (id == null)
+            
+            if (Id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comprobantes comprobantes = db.Comprobantes.Find(id);
+            Comprobantes comprobantes = db.Comprobantes.Find(Id);
+            Pagos pago = db.Pagos.Find(comprobantes.Pago_Id);
+            Pedidos pedido = db.Pedidos.Find(pago.Pedido);
+            ViewBag.pedido = JObject.Parse(pedido.Pedido);
+
             if (comprobantes == null)
             {
                 return HttpNotFound();
@@ -46,16 +54,20 @@ namespace Buongustaio.Controllers.EntitiesControllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Folio,Fechayhora,Orden,Subtotal,Total,Descuento,TerminacionTC,Transaccion,Cliente")] Comprobantes comprobantes)
+        public ActionResult Create(/*[Bind(Include = "Folio,Fechayhora,Orden,Subtotal,Total,Descuento,TerminacionTC,Transaccion,Cliente")] Comprobantes comprobantes,*/Pagos pago,Pedidos pedidos)
         {
-            if (ModelState.IsValid)
-            {
-                db.Comprobantes.Add(comprobantes);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            
 
-            return View(comprobantes);
+
+            //if (ModelState.IsValid)
+            //{
+                
+            //    db.Comprobantes.Add(comprobantes);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
+            return View();
         }
 
         // GET: Comprobantes/Edit/5
