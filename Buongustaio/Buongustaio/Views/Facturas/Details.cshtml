@@ -36,7 +36,7 @@
                 @Html.DisplayFor(model => model.DatosFiscales.Domicilio)
             </dd>
 
-            <div class="modal-body" style="width: 700px">
+            <div class="modal-body" id="tabla-contenido">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-highlight">
                         <thead>
@@ -75,7 +75,7 @@
             </dd>
 
         </dl>
-    </divid="PDF">
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" id="generar" value="generar" class="btn btn-default" />
@@ -96,40 +96,20 @@
     <script type="text/javascript">
         
         (function () {
-            var
-             form = $('#PDF'),
-             cache_width = form.width(),
-             a4 = [900, 841.89];  // for a4 size paper width and height
-
             $('#generar').on('click', function () {
-                $('#PDF').scrollTop(0);
-                createPDF();
+                var tabla = $('#tabla-contenido');
+                var cache_width = tabla.width();
+                tabla.width(700);
+                html2canvas(document.getElementById('PDF'), {
+                    onrendered: function (canvas) {
+                        var img = canvas.toDataURL("image/png");
+                        var doc = new jsPDF();
+                        doc.addImage(img, 'JPEG', -50, 20);
+                        doc.save('Factura.pdf');
+                    }
+                });
+                tabla.width(cache_width);
             });
-            //create pdf
-            function createPDF() {
-                getCanvas().then(function (canvas) {
-                    var
-                    img = canvas.toDataURL("image/png"),
-                    doc = new jsPDF({
-                        unit: 'px',
-                        format: 'a4'
-                    });
-                    var fecha = new Date();
-                    doc.addImage(img, 'JPEG', 20, 20);
-                    doc.save('Factura.pdf');
-                    form.width(cache_width);
-                });
-            }
-
-            // create canvas object
-            function getCanvas() {
-                form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
-                return html2canvas(form, {
-                    imageTimeout: 2000,
-                    removeContainer: true
-                });
-            }
-
         }());
     </script>
 }
