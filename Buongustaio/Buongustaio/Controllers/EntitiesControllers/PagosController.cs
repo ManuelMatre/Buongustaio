@@ -88,6 +88,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
 
                     await db.SaveChangesAsync();
                     Comprobantes comprobante = new Comprobantes();
+                    Retroalimentacion RA = new Retroalimentacion();
                     comprobante.Folio = IdUnico.GetUniqueKey();
                     comprobante.Fechayhora = DateTime.Now;
                     comprobante.Pago_Id = pagos.Id;
@@ -95,8 +96,15 @@ namespace Buongustaio.Controllers.EntitiesControllers
                     comprobante.Total = cantidad * 1.16;
                     db.Comprobantes.Add(comprobante);
                     await db.SaveChangesAsync();
+                    RA.Id = IdUnico.GetUniqueKey();
+                    RA.Fecha = DateTime.Now;
+                    RA.Cliente = pedido.Cliente;
+                    RA.Orden = pedido.Id;
+                    db.Retroalimentacions.Add(RA);
+                    await db.SaveChangesAsync();
                     ComprobantesController comprobanteController = new ComprobantesController();
                     comprobanteController.Details(comprobante.Folio);
+
                     return RedirectToAction("../Comprobantes/Details/" + comprobante.Folio);
                 }
             }

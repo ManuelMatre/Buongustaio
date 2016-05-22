@@ -58,15 +58,10 @@ namespace Buongustaio.Controllers.EntitiesControllers
             pedidos.PagoTotal = pagos.Cantidad;
             if (ModelState.IsValid)
             {
-                Retroalimentacion RA = new Retroalimentacion();
+                
                 db.Pedidos.Add(pedidos);
                 await db.SaveChangesAsync();
-                RA.Id= IdUnico.GetUniqueKey();
-                RA.Fecha = DateTime.Now;
-                RA.Cliente = pedidos.Cliente;
-                RA.Orden = pedidos.Id;
-                db.Retroalimentacions.Add(RA);
-                await db.SaveChangesAsync();
+                
                 return pedidos;//RedirectToAction("../Comprobantes/Index");
             }
 
