@@ -96,7 +96,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
                     comprobante.Total = cantidad * 1.16;
                     db.Comprobantes.Add(comprobante);
                     await db.SaveChangesAsync();
-                    RA.Id = IdUnico.GetUniqueKey();
+                    RA.Id = comprobante.Folio;
                     RA.Fecha = DateTime.Now;
                     RA.Cliente = pedido.Cliente;
                     RA.Orden = pedido.Id;
