@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Buongustaio.Models.Facturas>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DatosFiscales.Razon_social)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comprobante_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatosFiscales.Razon_social)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comprobante_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Folio }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Folio }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Folio })
+        </td>
+    </tr>
+}
+
+</table>
