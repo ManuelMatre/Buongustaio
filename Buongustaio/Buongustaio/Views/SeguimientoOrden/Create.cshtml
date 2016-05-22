@@ -16,67 +16,16 @@
     @using (Html.BeginForm()) 
     {
         @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <div class="text-center">
-                <h1>SEGUIMIENTO DE ENTREGA</h1>
-                <hr />
-                <label>Numero de Orden:</label>
-                <input type="text" />
-                <input type="button" value="Aceptar" class="btn btn-default"/>
-                <br />
-                <br />
-                <label>Estado de tu Orden:</label>
-                <br />
-                <label>@Html.DisplayNameFor(m=>m.Estado_orden)</label>
-                <br />
-                <label>Nivel de Satisfacción:</label>
-                <br />
-                <form role="form">
-                    <div class="radio">
-                        @Html.RadioButtonFor(m=>m.Nivel_satisfaccion, "Insatisfecho")
-                        Insatisfecho
-                        @*<label><input type="radio" name="Estado"/>Insatisfecho </label>
-                        <br />*@
-                    </div>
-                    <div class="radio">
-                        @Html.RadioButtonFor(m => m.Nivel_satisfaccion, "Poco satisfecho")
-                        Poco satisfecho
-                        @*<input type="radio" name="Estado"/>Poco satisfecho
-                        <br />*@
-                    </div>
-                    <div class="radio">
-                        @Html.RadioButtonFor(m => m.Nivel_satisfaccion, "Regular")
-                        Regular
-                        @*<input type="radio" name="Estado"/>Regular
-                        <br />*@
-                    </div>
-                    <div class="radio">
-                        @Html.RadioButtonFor(m => m.Nivel_satisfaccion, "Satisfecho")
-                        Satisfecho
-                        @*<input type="radio" name="Estado" />Satisfecho
-                        <br />*@
-                    </div>
-                    <div class="radio">
-                        @Html.RadioButtonFor(m => m.Nivel_satisfaccion, "Muy satisfecho")
-                        Muy satisfecho
-                        @*<input type="radio" name="Estado"/>Muy satisfecho
-                        <br />*@
-                    </div>
-                </form>
-                <div class="form-group">
-                    <br />
-                    <input type="submit" value="Enviar" class="btn btn-default" />
-                </div>
-            </div>
-           
-    
-            
+        <div class="text-center">
+            <h1>Consulta de Seguimiento:</h1>
+            <br />
+            @Html.TextBoxFor(m => m.Id)
+            <input type="submit" value="Consular" class="btn btn-default"  />
         </div>
+        
+        
     }
     
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+    
 </body>
 </html>

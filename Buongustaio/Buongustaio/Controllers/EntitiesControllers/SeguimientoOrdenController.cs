@@ -50,14 +50,16 @@ namespace Buongustaio.Controllers.EntitiesControllers
         public ActionResult Create([Bind(Include = "Id,Estado_orden,Nivel_satisfaccion,Cliente,Fecha,Orden")] Retroalimentacion retroalimentacion)
         {
 
-            retroalimentacion.Estado_orden = "En espera";
+            
             
 
             if (ModelState.IsValid)
             {
-                db.Retroalimentacions.Add(retroalimentacion);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //db.Retroalimentacions.Add(retroalimentacion);
+                //db.SaveChanges();
+                
+                return RedirectToAction("../SeguimientoOrden/Edit/"+retroalimentacion.Id);
             }
 
             return View(retroalimentacion);
@@ -87,6 +89,8 @@ namespace Buongustaio.Controllers.EntitiesControllers
         {
             if (ModelState.IsValid)
             {
+                
+                
                 db.Entry(retroalimentacion).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
