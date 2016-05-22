@@ -18,7 +18,7 @@ namespace Buongustaio.Models
         [Key]
         [Required]
         public string Folio { get; set; }
-        public string Comprobante { get; set; }
+        public string Comprobante_Id { get; set; }
         public string RFC { get; set; }
     
         public virtual Comprobantes Comprobantes { get; set; }

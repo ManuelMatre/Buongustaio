@@ -21,7 +21,6 @@ namespace Buongustaio.Models
         public System.DateTime Fecha { get; set; }
         public string Orden { get; set; }
     
-        public virtual Clientes Clientes { get; set; }
         public virtual Pedidos Pedidos { get; set; }
     }
 }

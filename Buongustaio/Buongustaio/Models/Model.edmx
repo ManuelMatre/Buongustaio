@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BuongustaioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BuongustaioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="Telefono" />
@@ -23,13 +23,10 @@
           </Key>
           <Property Name="Folio" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Fechayhora" Type="datetime" Nullable="false" />
-          <Property Name="Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Pago_Id" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Subtotal" Type="float" Nullable="false" />
           <Property Name="Total" Type="float" Nullable="false" />
           <Property Name="Descuento" Type="nvarchar" MaxLength="10" />
-          <Property Name="TerminacionTC" Type="int" Nullable="false" />
-          <Property Name="Transaccion" Type="int" Nullable="false" />
-          <Property Name="Cliente" Type="numeric" Precision="10" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="DatosFiscales">
           <Key>
@@ -46,7 +43,7 @@
             <PropertyRef Name="Folio" />
           </Key>
           <Property Name="Folio" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Comprobante" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Comprobante_Id" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="RFC" Type="varchar" MaxLength="12" Nullable="false" />
         </EntityType>
         <EntityType Name="Ingredientes">
@@ -123,29 +120,7 @@
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="Orden" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <Association Name="FK__Comproban__Clien__20C1E124">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="Telefono" />
-            </Principal>
-            <Dependent Role="Comprobantes">
-              <PropertyRef Name="Cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Miembros__client__25869641">
+        <Association Name="FK__Miembros__client__267ABA7A">
           <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
@@ -171,17 +146,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Comprobantes_Pedidos">
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1">
+        <Association Name="FK_Comprobantes_Pagos">
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Pedidos">
+            <Principal Role="Pagos">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comprobantes">
-              <PropertyRef Name="Orden" />
+              <PropertyRef Name="Pago_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -195,12 +170,14 @@
               <PropertyRef Name="Folio" />
             </Principal>
             <Dependent Role="Facturas">
-              <PropertyRef Name="Comprobante" />
+              <PropertyRef Name="Comprobante_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Facturas_DatosFiscales">
-          <End Role="DatosFiscales" Type="Self.DatosFiscales" Multiplicity="1" />
+          <End Role="DatosFiscales" Type="Self.DatosFiscales" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DatosFiscales">
@@ -225,14 +202,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Retroalimentacion_Cliente">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Retroalimentacion" Type="Self.Retroalimentacion" Multiplicity="*" />
+        <Association Name="FK_Pedidos_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clientes">
               <PropertyRef Name="Telefono" />
             </Principal>
-            <Dependent Role="Retroalimentacion">
+            <Dependent Role="Pedidos">
               <PropertyRef Name="Cliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -263,12 +242,7 @@
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Retroalimentacion" EntityType="Self.Retroalimentacion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Comproban__Clien__20C1E124" Association="Self.FK__Comproban__Clien__20C1E124">
-            <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Comprobantes" EntitySet="Comprobantes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Miembros__client__25869641" Association="Self.FK__Miembros__client__25869641">
+          <AssociationSet Name="FK__Miembros__client__267ABA7A" Association="Self.FK__Miembros__client__267ABA7A">
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Miembros" EntitySet="Miembros" />
           </AssociationSet>
@@ -276,8 +250,8 @@
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Ordenes" EntitySet="Ordenes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Comprobantes_Pedidos" Association="Self.FK_Comprobantes_Pedidos">
-            <End Role="Pedidos" EntitySet="Pedidos" />
+          <AssociationSet Name="FK_Comprobantes_Pagos" Association="Self.FK_Comprobantes_Pagos">
+            <End Role="Pagos" EntitySet="Pagos" />
             <End Role="Comprobantes" EntitySet="Comprobantes" />
           </AssociationSet>
           <AssociationSet Name="FK_Facturas_Comprobantes" Association="Self.FK_Facturas_Comprobantes">
@@ -292,16 +266,17 @@
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="Pagos" EntitySet="Pagos" />
           </AssociationSet>
-          <AssociationSet Name="FK_Retroalimentacion_Cliente" Association="Self.FK_Retroalimentacion_Cliente">
+          <AssociationSet Name="FK_Pedidos_Clientes" Association="Self.FK_Pedidos_Clientes">
             <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
           </AssociationSet>
           <AssociationSet Name="FK_Retroalimentacion_Pedidos" Association="Self.FK_Retroalimentacion_Pedidos">
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BuongustaioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -316,10 +291,9 @@
           <Property Name="Telefono" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="Es_Miembro" Type="Boolean" Nullable="false" />
           <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Comprobantes" Relationship="Self.FK__Comproban__Clien__20C1E124" FromRole="Clientes" ToRole="Comprobantes" />
-          <NavigationProperty Name="Miembros" Relationship="Self.FK__Miembros__client__25869641" FromRole="Clientes" ToRole="Miembros" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK__Miembros__client__267ABA7A" FromRole="Clientes" ToRole="Miembros" />
           <NavigationProperty Name="Ordenes" Relationship="Self.FK__Ordenes__Cliente__267ABA7A" FromRole="Clientes" ToRole="Ordenes" />
-          <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Cliente" FromRole="Clientes" ToRole="Retroalimentacion" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Clientes" FromRole="Clientes" ToRole="Pedidos" />
         </EntityType>
         <EntityType Name="Comprobantes">
           <Key>
@@ -327,15 +301,11 @@
           </Key>
           <Property Name="Folio" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Fechayhora" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pago_Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Subtotal" Type="Double" Nullable="false" />
           <Property Name="Total" Type="Double" Nullable="false" />
           <Property Name="Descuento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TerminacionTC" Type="Int32" Nullable="false" />
-          <Property Name="Transaccion" Type="Int32" Nullable="false" />
-          <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK__Comproban__Clien__20C1E124" FromRole="Comprobantes" ToRole="Clientes" />
-          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Comprobantes_Pedidos" FromRole="Comprobantes" ToRole="Pedidos" />
+          <NavigationProperty Name="Pagos" Relationship="Self.FK_Comprobantes_Pagos" FromRole="Comprobantes" ToRole="Pagos" />
           <NavigationProperty Name="Facturas" Relationship="Self.FK_Facturas_Comprobantes" FromRole="Comprobantes" ToRole="Facturas" />
         </EntityType>
         <EntityType Name="DatosFiscales">
@@ -354,7 +324,7 @@
             <PropertyRef Name="Folio" />
           </Key>
           <Property Name="Folio" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Comprobante" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comprobante_Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RFC" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Facturas_Comprobantes" FromRole="Facturas" ToRole="Comprobantes" />
           <NavigationProperty Name="DatosFiscales" Relationship="Self.FK_Facturas_DatosFiscales" FromRole="Facturas" ToRole="DatosFiscales" />
@@ -378,7 +348,7 @@
           <Property Name="Expiracion" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK__Miembros__client__25869641" FromRole="Miembros" ToRole="Clientes" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK__Miembros__client__267ABA7A" FromRole="Miembros" ToRole="Clientes" />
         </EntityType>
         <EntityType Name="Ordenes">
           <Key>
@@ -401,8 +371,9 @@
           <Property Name="Clave" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
           <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="Transaccion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Pedido" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pedidos" Relationship="BuongustaioModel.FK_Pagos_Pedidos" FromRole="Pagos" ToRole="Pedidos" />
+          <Property Name="Pedido" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Comprobantes_Pagos" FromRole="Pagos" ToRole="Comprobantes" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pagos_Pedidos" FromRole="Pagos" ToRole="Pedidos" />
         </EntityType>
         <EntityType Name="Pedidos">
           <Key>
@@ -412,10 +383,10 @@
           <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="Pedido" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Comprobantes" Relationship="Self.FK_Comprobantes_Pedidos" FromRole="Pedidos" ToRole="Comprobantes" />
-          <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Pedidos" FromRole="Pedidos" ToRole="Retroalimentacion" />
           <Property Name="PagoTotal" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Pagos" Relationship="BuongustaioModel.FK_Pagos_Pedidos" FromRole="Pedidos" ToRole="Pagos" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Pedidos_Clientes" FromRole="Pedidos" ToRole="Clientes" />
+          <NavigationProperty Name="Pagos" Relationship="Self.FK_Pagos_Pedidos" FromRole="Pedidos" ToRole="Pagos" />
+          <NavigationProperty Name="Retroalimentacion" Relationship="Self.FK_Retroalimentacion_Pedidos" FromRole="Pedidos" ToRole="Retroalimentacion" />
         </EntityType>
         <EntityType Name="Productos">
           <Key>
@@ -438,32 +409,9 @@
           <Property Name="Cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Orden" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK_Retroalimentacion_Cliente" FromRole="Retroalimentacion" ToRole="Clientes" />
           <NavigationProperty Name="Pedidos" Relationship="Self.FK_Retroalimentacion_Pedidos" FromRole="Retroalimentacion" ToRole="Pedidos" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <Association Name="FK__Comproban__Clien__20C1E124">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="Telefono" />
-            </Principal>
-            <Dependent Role="Comprobantes">
-              <PropertyRef Name="Cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Miembros__client__25869641">
+        <Association Name="FK__Miembros__client__267ABA7A">
           <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
@@ -489,29 +437,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Retroalimentacion_Cliente">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Retroalimentacion" Type="Self.Retroalimentacion" Multiplicity="*" />
+        <Association Name="FK_Pedidos_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clientes">
               <PropertyRef Name="Telefono" />
             </Principal>
-            <Dependent Role="Retroalimentacion">
+            <Dependent Role="Pedidos">
               <PropertyRef Name="Cliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Comprobantes_Pedidos">
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1">
+        <Association Name="FK_Comprobantes_Pagos">
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Comprobantes" Type="Self.Comprobantes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Pedidos">
+            <Principal Role="Pagos">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comprobantes">
-              <PropertyRef Name="Orden" />
+              <PropertyRef Name="Pago_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -525,12 +475,14 @@
               <PropertyRef Name="Folio" />
             </Principal>
             <Dependent Role="Facturas">
-              <PropertyRef Name="Comprobante" />
+              <PropertyRef Name="Comprobante_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Facturas_DatosFiscales">
-          <End Role="DatosFiscales" Type="Self.DatosFiscales" Multiplicity="1" />
+          <End Role="DatosFiscales" Type="Self.DatosFiscales" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DatosFiscales">
@@ -538,6 +490,20 @@
             </Principal>
             <Dependent Role="Facturas">
               <PropertyRef Name="RFC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Pedidos">
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="Pedido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -567,12 +533,7 @@
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
           <EntitySet Name="Productos" EntityType="Self.Productos" />
           <EntitySet Name="Retroalimentacion" EntityType="Self.Retroalimentacion" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="FK__Comproban__Clien__20C1E124" Association="Self.FK__Comproban__Clien__20C1E124">
-            <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Comprobantes" EntitySet="Comprobantes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Miembros__client__25869641" Association="Self.FK__Miembros__client__25869641">
+          <AssociationSet Name="FK__Miembros__client__267ABA7A" Association="Self.FK__Miembros__client__267ABA7A">
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Miembros" EntitySet="Miembros" />
           </AssociationSet>
@@ -580,12 +541,12 @@
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Ordenes" EntitySet="Ordenes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Retroalimentacion_Cliente" Association="Self.FK_Retroalimentacion_Cliente">
+          <AssociationSet Name="FK_Pedidos_Clientes" Association="Self.FK_Pedidos_Clientes">
             <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comprobantes_Pedidos" Association="Self.FK_Comprobantes_Pedidos">
             <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comprobantes_Pagos" Association="Self.FK_Comprobantes_Pagos">
+            <End Role="Pagos" EntitySet="Pagos" />
             <End Role="Comprobantes" EntitySet="Comprobantes" />
           </AssociationSet>
           <AssociationSet Name="FK_Facturas_Comprobantes" Association="Self.FK_Facturas_Comprobantes">
@@ -596,29 +557,15 @@
             <End Role="DatosFiscales" EntitySet="DatosFiscales" />
             <End Role="Facturas" EntitySet="Facturas" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Pedidos" Association="Self.FK_Pagos_Pedidos">
+            <End Role="Pedidos" EntitySet="Pedidos" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
           <AssociationSet Name="FK_Retroalimentacion_Pedidos" Association="Self.FK_Retroalimentacion_Pedidos">
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="Retroalimentacion" EntitySet="Retroalimentacion" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pagos_Pedidos" Association="BuongustaioModel.FK_Pagos_Pedidos">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="Pagos" EntitySet="Pagos" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Pagos_Pedidos">
-          <End Type="BuongustaioModel.Pedidos" Role="Pedidos" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BuongustaioModel.Pagos" Role="Pagos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Pagos">
-              <PropertyRef Name="Pedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -643,13 +590,10 @@
               <MappingFragment StoreEntitySet="Comprobantes">
                 <ScalarProperty Name="Folio" ColumnName="Folio" />
                 <ScalarProperty Name="Fechayhora" ColumnName="Fechayhora" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Pago_Id" ColumnName="Pago_Id" />
                 <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Descuento" ColumnName="Descuento" />
-                <ScalarProperty Name="TerminacionTC" ColumnName="TerminacionTC" />
-                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
-                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -668,7 +612,7 @@
             <EntityTypeMapping TypeName="BuongustaioModel.Facturas">
               <MappingFragment StoreEntitySet="Facturas">
                 <ScalarProperty Name="Folio" ColumnName="Folio" />
-                <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
+                <ScalarProperty Name="Comprobante_Id" ColumnName="Comprobante_Id" />
                 <ScalarProperty Name="RFC" ColumnName="RFC" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -708,7 +652,6 @@
           <EntitySetMapping Name="Pagos">
             <EntityTypeMapping TypeName="BuongustaioModel.Pagos">
               <MappingFragment StoreEntitySet="Pagos">
-                <ScalarProperty Name="Pedido" ColumnName="Pedido" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NumTarjeta" ColumnName="NumTarjeta" />
                 <ScalarProperty Name="Expiracion" ColumnName="Expiracion" />
@@ -716,17 +659,18 @@
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
+                <ScalarProperty Name="Pedido" ColumnName="Pedido" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pedidos">
             <EntityTypeMapping TypeName="BuongustaioModel.Pedidos">
               <MappingFragment StoreEntitySet="Pedidos">
-                <ScalarProperty Name="PagoTotal" ColumnName="PagoTotal" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Cliente" ColumnName="Cliente" />
                 <ScalarProperty Name="Pedido" ColumnName="Pedido" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PagoTotal" ColumnName="PagoTotal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -754,17 +698,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="BuongustaioModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -782,7 +715,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

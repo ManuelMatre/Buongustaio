@@ -20,21 +20,16 @@ namespace Buongustaio.Models
         {
             this.Facturas = new HashSet<Facturas>();
         }
-
         [Key]
         [Required]
         public string Folio { get; set; }
         public System.DateTime Fechayhora { get; set; }
-        public string Orden { get; set; }
+        public string Pago_Id { get; set; }
         public double Subtotal { get; set; }
         public double Total { get; set; }
         public string Descuento { get; set; }
-        public int TerminacionTC { get; set; }
-        public int Transaccion { get; set; }
-        public decimal Cliente { get; set; }
     
-        public virtual Clientes Clientes { get; set; }
-        public virtual Pedidos Pedidos { get; set; }
+        public virtual Pagos Pagos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Facturas> Facturas { get; set; }
     }

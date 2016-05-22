@@ -18,10 +18,9 @@ namespace Buongustaio.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Clientes()
         {
-            this.Comprobantes = new HashSet<Comprobantes>();
             this.Miembros = new HashSet<Miembros>();
             this.Ordenes = new HashSet<Ordenes>();
-            this.Retroalimentacion = new HashSet<Retroalimentacion>();
+            this.Pedidos = new HashSet<Pedidos>();
         }
     
         public string Nombre { get; set; }
@@ -35,12 +34,10 @@ namespace Buongustaio.Models
         public string Contrasena { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comprobantes> Comprobantes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Miembros> Miembros { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ordenes> Ordenes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Retroalimentacion> Retroalimentacion { get; set; }
+        public virtual ICollection<Pedidos> Pedidos { get; set; }
     }
 }
