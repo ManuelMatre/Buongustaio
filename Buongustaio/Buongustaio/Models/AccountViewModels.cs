@@ -92,12 +92,12 @@ namespace Buongustaio.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Apellido")]
+        [Display(Name = "Apellido Paterno")]
         public string ApellidoPaterno { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Apellido")]
+        [Display(Name = "Apellido Materno")]
         public string ApellidoMaterno { get; set; }
 
         [Required]
