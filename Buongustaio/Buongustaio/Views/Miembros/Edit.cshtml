@@ -1,0 +1,71 @@
+﻿@model Buongustaio.Models.Miembros
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        if (Request.IsAuthenticated)
+        {
+            <div class="form-horizontal">
+                <div class="text-center">
+                    <h1>Miembros</h1>
+                    <hr />
+                    <p>
+                        <h2>MEMBRESÍA Buongustaio</h2>
+                        Con la Membresía Buongusaio tendrás derecho a un boleto canjeable para ti (si es sencilla) o para un acompañante (si es doble), para que vengas a Buongustaio® y disfrutes de los mejores estrenos<br /> las veces que quieras, siempre y cuando no se empalmen los horarios. La Membresía Buongustaio® es personal e intransferible, por lo que sólo el titular de la misma podrá solicitar sus boletos en taquilla presentando una identificación oficial. En caso de que el titular sea menor de edad, deberá presentar identificación de institución escolar o médica que le acredite.
+                        <br />
+                        ¿Cómo adquiero mi Membresía Buongustaio®?<br />
+                        Sólo necesitas contar con tu Tarjeta Club Buongustaio® y acudir al Módulo de Atención al Cliente, donde serás guiado para el llenado de tus formatos y la elección de pago de acuerdo a la categoría que elijas.
+                        <br />
+                        La activación de la Membresía queda lista a las 24 horas de haberla tramitado. Para trámites (con tarjeta de crédito) a 12 meses se debe considerar lo siguiente:
+                        <br />
+                        La tarjeta de crédito del cliente debe contar con el importe total de la transacción, de lo contrario no se podrá efectuar el cobro.
+                        El importe total de la transacción será congelado por el banco, el cliente podrá disponer de dicha cantidad conforme vaya realizando sus pagos mensuales.
+                        Por política del banco, no es posible cancelar o modificar una operación de pago a 12 meses.
+                        * El pago a 12 meses sin intereses aplica únicamente con tarjetas participantes.
+                        El titular contará con los beneficios de la Tarjeta Club Buongustaio® y de la Membresía en una misma tarjeta.
+                        <br />
+
+                        Membresía Standard: incluye mucha comida exotica.<br />
+                        <br />
+                        Estamos Para servilos
+                    </p>
+                    @Html.HiddenFor(m => m.cliente)
+                    
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Acepto" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <h1>Necesita una Cuenta Para ser Miembro</h1>
+            </div>
+
+        }
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

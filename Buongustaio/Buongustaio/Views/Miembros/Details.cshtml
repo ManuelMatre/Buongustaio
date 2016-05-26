@@ -1,0 +1,50 @@
+﻿@model Buongustaio.Models.Miembros
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Miembros</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Estatus)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Estatus)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Expiracion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Expiracion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cliente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cliente)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

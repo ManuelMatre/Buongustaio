@@ -1,0 +1,56 @@
+﻿@model Buongustaio.Models.Miembros
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Miembros</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Estatus)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Estatus)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Expiracion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Expiracion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cliente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cliente)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

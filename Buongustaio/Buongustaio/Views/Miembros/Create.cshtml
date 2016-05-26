@@ -1,0 +1,51 @@
+﻿@model Buongustaio.Models.Miembros
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        if (Request.IsAuthenticated)
+        {
+            <div class="form-horizontal">
+                <div class="text-center">
+                    <h1>Miembros</h1>
+                    <hr />
+                    Ingrese su Numero Telefonico:
+                    @Html.TextBoxFor(m => m.cliente)
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Ser Miembro" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <h1>Necesita una Cuenta Para ser Miembro</h1>
+            </div>
+            
+        }
+
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>
