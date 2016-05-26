@@ -11,12 +11,18 @@ using Buongustaio.Models;
 using Buongustaio.Classes;
 using Newtonsoft.Json.Linq;
 using System.Web.Script.Serialization;
+using System.Text;
+using System.Web.Helpers;
+using System.IO;
 
 namespace Buongustaio.Controllers.EntitiesControllers
 {
     public class PagosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        WebResponse response;
+        Stream datastream;
+        string responseFromServer;
 
         // GET: Pagos
         public async Task<ActionResult> Index()
@@ -68,20 +74,15 @@ namespace Buongustaio.Controllers.EntitiesControllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,NumTarjeta,Expiracion,Propietario,Clave,Cantidad,Transaccion,Pedido")] Pagos pagos)
         {
-             
             pagos.Id = IdUnico.GetUniqueKey();
-            pagos.Transaccion = IdUnico.GetUniqueKey();
             var orden = (Ordenes)db.Ordenes.Where(x => x.Id == pagos.Pedido).FirstOrDefault();
-            //comprobante
             var cantidad = pagos.Cantidad;
-
-           
-            
 
             if (ModelState.IsValid)
             {
-                if(true/*Agregar método para conexion con banco*/)
+                if(await postBank(pagos))
                 {
+                    pagos.Transaccion = responseFromServer;
                     PedidosController nvoPedido = new PedidosController();
                     Pedidos pedido = await nvoPedido.Create(orden, pagos);
                     db.Pagos.Add(pagos);
@@ -108,8 +109,11 @@ namespace Buongustaio.Controllers.EntitiesControllers
 
                     return RedirectToAction("../Comprobantes/Details/" + comprobante.Folio);
                 }
+                else
+                {
+                    ViewBag.BankError = "Hubo un problema con sus datos";
+                }
             }
-
             return View(pagos);
         }
 
@@ -177,6 +181,43 @@ namespace Buongustaio.Controllers.EntitiesControllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private async Task<bool> postBank(Pagos pago)
+        {
+            var request = (HttpWebRequest)WebRequest.Create("http://192.168.1.156:8080/api/Transaction");
+
+            MiPago userPaymment = new MiPago();
+            userPaymment.Amount = pago.Cantidad;
+            userPaymment.CardNumber = pago.NumTarjeta;
+            userPaymment.ExpirationDate = pago.Expiracion;
+            userPaymment.SecurityCode = pago.Clave.ToString();
+            userPaymment.Token = "bd4e5b04-9190-49e4-b5f1-b09afbd66f3f";
+
+            var userData = new JavaScriptSerializer().Serialize(userPaymment);
+            var data = Encoding.ASCII.GetBytes(userData);
+
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            try
+            {
+                response = request.GetResponse();
+                datastream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(datastream);
+                responseFromServer = reader.ReadToEnd();
+                return true;
+            }
+            catch (System.Net.WebException ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -14,16 +14,17 @@
 </head>
 <body>
     <div>
-        <div id="PDF">
+        <div>
             <div class="text-center">
                 <h1>Comprobante De Compra</h1>
                 <br />
-                <pre>
+                <pre id="contenido">
             Buongustaio S.A de C.V.                           RFC:csfsvssvc87
             Dirección Restaurante                                            
             Hermosillo Sonora                                                
             <label>@DateTime.Now</label>                                         
             <label>Folio:</label>@Html.DisplayFor(mode=> mode.Folio)                                                  
+            <label>Transacción:</label>@Html.DisplayFor(mode=> mode.Transaccio)  
             <table class="table">
                 <thead>
                     <tr>
@@ -73,16 +74,20 @@
         <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
         <script type="text/javascript">
 
-        function genPDF() {
-            html2canvas(document.getElementById('PDF'), {
-                onrendered: function (canvas) {
-                    var img = canvas.toDataURL("image/png");
-                    var doc = new jsPDF();
-                    doc.addImage(img, 'JPEG', -20, 0);
-                    doc.save('Factura.pdf');
-                }
-            });
-        }
+            function genPDF() {
+                var contenido = $('#contenido');
+                var width_cache = contenido.width();
+                contenido.width(700);
+                html2canvas(contenido, {
+                    onrendered: function (canvas) {
+                        var img = canvas.toDataURL("image/png");
+                        var doc = new jsPDF();
+                        doc.addImage(img, 'JPEG', -50, 20);
+                        doc.save('Factura.pdf');
+                    }
+                });
+                contenido.width(width_cache);
+            }
         </script>
     }
 </body>
