@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Buongustaio.Models;
+using Buongustaio.Classes;
 
 namespace Buongustaio.Controllers
 {
@@ -148,7 +149,7 @@ namespace Buongustaio.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model,Clientes cliente)
+        public async Task<ActionResult> Register(RegisterViewModel model,Clientes cliente,Miembros miembro)
         {
             if (ModelState.IsValid)
             {
@@ -170,7 +171,12 @@ namespace Buongustaio.Controllers
                     cliente.Contrasena = model.Password;
                     db.Clientes.Add(cliente);
                     await db.SaveChangesAsync();
-
+                    miembro.Id = IdUnico.GetUniqueKey();
+                    miembro.cliente = cliente.Telefono;
+                    miembro.Estatus = "Desactivado";
+                    miembro.Expiracion = DateTime.Now;
+                    db.Miembros.Add(miembro);
+                    await db.SaveChangesAsync();
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

@@ -35,7 +35,10 @@ namespace Buongustaio.Controllers.EntitiesControllers
             Pagos pago = db.Pagos.Find(comprobantes.Pago_Id);
             Pedidos pedido = db.Pedidos.Find(pago.Pedido);
             ViewBag.pedido = JObject.Parse(pedido.Pedido);
-
+            ViewBag.numTarjeta = pago.NumTarjeta.Substring(pago.NumTarjeta.Length - 4).PadLeft(pago.NumTarjeta.Length, '*');
+            ViewBag.Transaccion = pago.Transaccion;
+            
+            
             if (comprobantes == null)
             {
                 return HttpNotFound();

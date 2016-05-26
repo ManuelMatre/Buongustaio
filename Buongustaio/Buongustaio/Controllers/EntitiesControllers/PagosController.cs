@@ -89,6 +89,7 @@ namespace Buongustaio.Controllers.EntitiesControllers
                     await db.SaveChangesAsync();
                     Comprobantes comprobante = new Comprobantes();
                     Retroalimentacion RA = new Retroalimentacion();
+                    
                     comprobante.Folio = IdUnico.GetUniqueKey();
                     comprobante.Fechayhora = DateTime.Now;
                     comprobante.Pago_Id = pagos.Id;
