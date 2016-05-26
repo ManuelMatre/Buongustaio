@@ -171,7 +171,7 @@ namespace Buongustaio.Controllers
                     cliente.Contrasena = model.Password;
                     db.Clientes.Add(cliente);
                     await db.SaveChangesAsync();
-                    miembro.Id = IdUnico.GetUniqueKey();
+                    miembro.Id = Convert.ToString(cliente.Telefono); //IdUnico.GetUniqueKey();
                     miembro.cliente = cliente.Telefono;
                     miembro.Estatus = "Desactivado";
                     miembro.Expiracion = DateTime.Now;
